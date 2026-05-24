@@ -241,8 +241,27 @@
       patientBlood.classList.add("show");
     } else {
       patientBlood.classList.remove("show");
-    patientAddrRow.style.display = "none";
-    patientTags.innerHTML = "";
+    }
+
+    // 家庭地址
+    if (data.homeAddress) {
+      patientAddr.textContent = data.homeAddress;
+      patientAddrRow.style.display = "flex";
+    } else {
+      patientAddrRow.style.display = "none";
+    }
+
+    // 全部疾病 + 用药标签
+    var allTags = "";
+    (data.diseases || []).forEach(function (d) {
+      var label = DISEASE_MAP[d] || d;
+      allTags += "<span class="patient-tag">" + label + "</span>";
+    });
+    (data.medications || []).forEach(function (m) {
+      var label = MED_MAP[m] || m;
+      allTags += "<span class="patient-tag med-tag">" + label + "</span>";
+    });
+    patientTags.innerHTML = allTags;
     }
 
     // 隐藏旧警告
