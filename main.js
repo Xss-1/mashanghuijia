@@ -300,6 +300,7 @@
       correctLevel: QRCode.CorrectLevel.M
     });
 
+    qrcodeContainer.classList.add("has-qr");
     qrcodeContainer.style.cursor = "pointer";
     qrcodeContainer.title = "点击模拟路人扫码";
     updateURLIndicator(); qrHint.textContent = "✅ 智芯码已生成 · 点击二维码模拟路人扫码";

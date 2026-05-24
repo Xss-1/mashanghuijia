@@ -1,46 +1,50 @@
 ﻿/* ============================================================
-   码上回家 — 极简医疗风格
-   设计：Apple 式白底 · 大留白 · 单一蓝点缀 · 专业可信
+   码上回家 — DJI × Apple 暗色科技风
+   设计：深空背景 · 玻璃拟态 · 动态网格 · 精密微交互
    ============================================================ */
 
 /* ── 变量 ── */
 :root {
   --blue: #2F80ED;
-  --blue-light: #E8F1FD;
-  --blue-muted: #A3C6F7;
+  --blue-light: #5C9CFF;
+  --blue-glow: rgba(47,128,237,0.3);
+  --blue-glass: rgba(47,128,237,0.08);
 
-  --bg: #F5F5F7;
-  --surface: #FFFFFF;
-  --surface-hover: #FAFAFC;
+  --bg: #08090D;
+  --bg-card: rgba(255,255,255,0.03);
+  --bg-card-hover: rgba(255,255,255,0.05);
+  --bg-elevated: rgba(255,255,255,0.06);
+  --bg-input: rgba(255,255,255,0.04);
 
-  --text: #1D1D1F;
-  --text-secondary: #6E6E73;
-  --text-tertiary: #AEAEB2;
+  --text: #E8E8ED;
+  --text-secondary: #9898A0;
+  --text-tertiary: #5C5C66;
 
-  --border: #E5E5EA;
-  --border-light: #F0F0F2;
+  --border: rgba(255,255,255,0.06);
+  --border-active: rgba(255,255,255,0.12);
+  --border-blue: rgba(47,128,237,0.3);
 
-  --danger: #E03A3A;
-  --danger-bg: #FFF5F5;
-  --danger-border: #FCD5D5;
+  --danger: #FF4D4F;
+  --danger-bg: rgba(255,77,79,0.08);
+  --danger-border: rgba(255,77,79,0.2);
 
-  --warning: #D4850A;
-  --warning-bg: #FFFBF0;
-  --warning-border: #FCE7C5;
+  --warning: #F5A623;
+  --warning-bg: rgba(245,166,35,0.08);
+  --warning-border: rgba(245,166,35,0.2);
 
-  --success: #2DA44E;
+  --success: #34D399;
 
-  --radius: 14px;
+  --radius: 16px;
   --radius-sm: 10px;
-  --radius-xs: 6px;
+  --radius-xs: 8px;
 
-  --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
-  --shadow: 0 2px 8px rgba(0,0,0,0.06);
-  --shadow-lg: 0 4px 16px rgba(0,0,0,0.08);
+  --shadow-card: 0 1px 0 rgba(255,255,255,0.04), 0 4px 24px rgba(0,0,0,0.4);
+  --shadow-lg: 0 1px 0 rgba(255,255,255,0.06), 0 8px 40px rgba(0,0,0,0.5);
 
-  --font: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
-  --mono: "SF Mono", "JetBrains Mono", "Consolas", monospace;
+  --font: "Noto Sans SC", "PingFang SC", -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 /* ── 重置 ── */
@@ -53,251 +57,340 @@ body{
   min-height:100vh;
   display:flex;flex-direction:column;
   letter-spacing:-0.01em;
+  overflow-x:hidden;
+}
+
+/* ── 动态网格背景 ── */
+body::before {
+  content:"";
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: grid-drift 20s linear infinite;
+  mask-image: radial-gradient(ellipse at 50% 30%, black 30%, transparent 70%);
+}
+
+@keyframes grid-drift {
+  0% { background-position: 0 0, 0 0; }
+  100% { background-position: 60px 60px, 60px 60px; }
+}
+
+/* ── 微弱粒子光点 ── */
+body::after {
+  content:"";
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(1px 1px at 20% 30%, rgba(47,128,237,0.4), transparent),
+    radial-gradient(1px 1px at 45% 60%, rgba(47,128,237,0.3), transparent),
+    radial-gradient(1px 1px at 70% 20%, rgba(47,128,237,0.5), transparent),
+    radial-gradient(1px 1px at 85% 70%, rgba(47,128,237,0.3), transparent),
+    radial-gradient(1px 1px at 15% 80%, rgba(92,156,255,0.4), transparent),
+    radial-gradient(1px 1px at 55% 15%, rgba(92,156,255,0.3), transparent);
+  animation: particles-float 8s ease-in-out infinite alternate;
+}
+
+@keyframes particles-float {
+  0% { opacity: 0.6; transform: translateY(0); }
+  100% { opacity: 1; transform: translateY(-10px); }
 }
 
 /* ── Header ── */
 .header{
-  background:var(--surface);
+  position:sticky;top:0;z-index:100;
+  background:rgba(8,9,13,0.85);
+  backdrop-filter:blur(20px) saturate(180%);
+  -webkit-backdrop-filter:blur(20px) saturate(180%);
   border-bottom:1px solid var(--border);
   padding:0 32px;height:56px;flex-shrink:0;
-  position:sticky;top:0;z-index:100;
-  backdrop-filter:blur(20px);
-  -webkit-backdrop-filter:blur(20px);
-  background:rgba(255,255,255,0.85);
 }
 .header-inner{
   max-width:1440px;margin:0 auto;height:100%;
   display:flex;align-items:center;justify-content:space-between;
+  position:relative;z-index:1;
 }
-.logo{display:flex;align-items:center;gap:10px}
-.logo-icon{font-size:24px}
-.logo-text{font-size:20px;font-weight:700;color:var(--blue);letter-spacing:-0.5px}
+.logo{display:flex;align-items:center;gap:8px}
+.logo-icon{font-size:22px}
+.logo-text{font-size:18px;font-weight:700;color:var(--text);letter-spacing:-0.3px}
 .header-badge{
-  font-size:13px;font-weight:600;color:var(--text-secondary);
-  background:var(--bg);padding:4px 14px;border-radius:20px;
-  letter-spacing:1px;
+  font-size:12px;font-weight:500;color:var(--text-tertiary);
+  background:var(--bg-card);border:1px solid var(--border);
+  padding:4px 14px;border-radius:20px;letter-spacing:1px;
 }
 .header-status{display:flex;align-items:center;gap:8px}
-.status-dot{
-  width:7px;height:7px;border-radius:50%;
-  background:var(--success);
-}
-.status-text{font-size:12px;color:var(--text-tertiary)}
+.status-dot{width:6px;height:6px;border-radius:50%;background:var(--success);box-shadow:0 0 6px rgba(52,211,153,0.5)}
+.status-text{font-size:11px;color:var(--text-tertiary)}
 
 /* ── 视图导航 ── */
-.view-nav{display:flex;gap:4px}
+.view-nav{display:flex;gap:2px;background:var(--bg-card);border-radius:10px;padding:3px;border:1px solid var(--border)}
 .view-nav-btn{
-  padding:6px 16px;font-size:13px;font-weight:600;
+  padding:6px 14px;font-size:12px;font-weight:600;
   font-family:var(--font);border:none;border-radius:8px;
   background:transparent;color:var(--text-secondary);
-  cursor:pointer;transition:all 0.2s ease;
+  cursor:pointer;transition:all 0.2s var(--ease);
 }
-.view-nav-btn:hover{background:var(--blue-light);color:var(--blue)}
-.view-nav-btn.active{background:var(--blue);color:#FFFFFF}
+.view-nav-btn:hover{color:var(--text)}
+.view-nav-btn.active{background:var(--blue);color:#fff;box-shadow:0 2px 8px var(--blue-glow)}
 
-/* ── 三栏主体 ── */
+/* ── 三栏 ── */
 .dashboard{
   flex:1;max-width:1440px;width:100%;margin:0 auto;
   padding:28px 28px 20px;
   display:grid;grid-template-columns:1fr 1fr 1fr;
-  gap:24px;align-items:start;
+  gap:20px;align-items:start;
+  position:relative;z-index:1;
 }
 
-/* ── 面板 ── */
+/* ── 玻璃拟态面板 ── */
 .panel{
-  background:var(--surface);
+  background:var(--bg-card);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border:1px solid var(--border);
   border-radius:var(--radius);
-  box-shadow:var(--shadow-xs);
-  padding:28px;
+  padding:24px;
   display:flex;flex-direction:column;
-  gap:24px;
-  border:1px solid var(--border-light);
-  transition:box-shadow 0.3s ease;
+  gap:20px;
+  transition:border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
 }
-.panel:hover{box-shadow:var(--shadow-sm)}
-.panel-header{padding-bottom:16px;border-bottom:1px solid var(--border-light)}
-.panel-title{font-size:19px;font-weight:700;color:var(--text);margin-bottom:2px}
-.panel-subtitle{font-size:13px;color:var(--text-tertiary)}
+.panel:hover{
+  border-color:var(--border-active);
+  box-shadow:var(--shadow-card);
+}
+.panel-header{padding-bottom:12px;border-bottom:1px solid var(--border)}
+.panel-title{font-size:17px;font-weight:600;color:var(--text);margin-bottom:2px}
+.panel-subtitle{font-size:12px;color:var(--text-tertiary)}
 
 /* ═══════════════════════════════
-   左侧栏 — 家属端
+   表单
    ═══════════════════════════════ */
-.patient-form{display:flex;flex-direction:column;gap:20px}
-.form-group{border:none;display:flex;flex-direction:column;gap:6px}
-.form-label{font-size:16px;font-weight:600;color:var(--text)}
-.label-optional{font-weight:400;font-size:12px;color:var(--text-tertiary)}
+.patient-form{display:flex;flex-direction:column;gap:16px}
+.form-group{border:none;display:flex;flex-direction:column;gap:5px}
+.form-label{font-size:14px;font-weight:600;color:var(--text-secondary);letter-spacing:0.02em}
+.label-optional{font-weight:400;font-size:11px;color:var(--text-tertiary)}
 
-.form-input{
-  height:50px;padding:0 16px;
-  border:1.5px solid var(--border);
+.form-input, select.form-input{
+  height:46px;padding:0 14px;
+  border:1px solid var(--border);
   border-radius:var(--radius-xs);
-  font-size:17px;font-family:var(--font);font-weight:500;
-  color:var(--text);background:var(--bg);
-  transition:border-color 0.2s ease, box-shadow 0.2s ease;
+  font-size:15px;font-family:var(--font);font-weight:500;
+  color:var(--text);background:var(--bg-input);
+  transition:all 0.2s var(--ease);
   outline:none;
+  -webkit-appearance:none;appearance:none;
+}
+select.form-input{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M3 5l3 3 3-3' stroke='%239898A0' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;
 }
 .form-input:focus{
   border-color:var(--blue);
-  background:var(--surface);
-  box-shadow:0 0 0 3px rgba(47,128,237,0.1);
+  box-shadow:0 0 0 3px rgba(47,128,237,0.15);
+  background:rgba(255,255,255,0.06);
 }
 .form-input::placeholder{color:var(--text-tertiary);font-weight:400}
 
 /* 标签 */
-.tag-grid{display:flex;flex-wrap:wrap;gap:8px}
+.tag-grid{display:flex;flex-wrap:wrap;gap:6px}
 .tag-chip{position:relative;cursor:pointer;user-select:none}
 .tag-chip input{position:absolute;opacity:0;width:0;height:0}
 .tag-text{
-  display:block;padding:10px 20px;
-  font-size:15px;font-weight:600;
-  border:1.5px solid var(--border);
-  border-radius:8px;background:var(--surface);
-  color:var(--text-secondary);
-  transition:all 0.2s ease;
+  display:block;padding:8px 16px;font-size:13px;font-weight:600;
+  border:1px solid var(--border);border-radius:20px;
+  background:transparent;color:var(--text-secondary);
+  transition:all 0.2s var(--ease);
 }
 .tag-chip input:checked + .tag-text{
-  background:var(--blue-light);color:var(--blue);
-  border-color:var(--blue-muted);
+  background:var(--blue-glass);color:var(--blue-light);
+  border-color:var(--border-blue);box-shadow:0 0 12px rgba(47,128,237,0.1);
 }
-.tag-chip:hover .tag-text{border-color:var(--blue-muted)}
+.tag-chip:hover .tag-text{border-color:var(--border-active)}
 
-/* 赋码按钮 */
+/* 阿尔茨海默特殊标签 */
+.tag-chip-critical .tag-text-important{
+  border-color:var(--danger-border);color:var(--danger);
+}
+.tag-chip-critical input:checked + .tag-text-important{
+  background:var(--danger-bg);border-color:var(--danger);color:var(--danger);
+  box-shadow:0 0 12px rgba(255,77,79,0.1);
+}
+
+/* 按钮 */
 .btn-generate{
   display:flex;align-items:center;justify-content:center;gap:8px;
-  width:100%;height:56px;margin-top:4px;
-  font-size:18px;font-weight:700;font-family:var(--font);letter-spacing:0.5px;
+  width:100%;height:50px;margin-top:4px;
+  font-size:16px;font-weight:700;font-family:var(--font);letter-spacing:0.5px;
   border:none;border-radius:var(--radius-xs);
-  color:#FFFFFF;background:var(--blue);
-  cursor:pointer;transition:all 0.2s ease;
+  color:#fff;background:var(--blue);
+  cursor:pointer;
+  transition:all 0.3s var(--ease);
+  position:relative;overflow:hidden;
 }
-.btn-generate:hover{background:#1A6FD6;transform:translateY(-1px);box-shadow:0 4px 12px rgba(47,128,237,0.25)}
+.btn-generate::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(135deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+  transform:translateX(-100%);
+  transition:transform 0.6s ease;
+}
+.btn-generate:hover{background:#1A6FD6;transform:translateY(-1px);box-shadow:0 6px 24px var(--blue-glow)}
+.btn-generate:hover::before{transform:translateX(100%)}
 .btn-generate:active{transform:translateY(0)}
-.btn-icon{font-size:20px}
+.btn-icon{font-size:18px}
 
-/* QR */
-.qr-section{display:flex;flex-direction:column;align-items:center;gap:10px}
+/* QR 容器 */
+.qr-section{display:flex;flex-direction:column;align-items:center;gap:8px}
 .qr-container{
-  width:100%;min-height:160px;
+  width:100%;min-height:150px;
   border:2px dashed var(--border);
   border-radius:var(--radius-sm);
-  background:var(--bg);
+  background:var(--bg-input);
   display:flex;align-items:center;justify-content:center;
-  transition:border-color 0.2s ease;
+  transition:border-color 0.3s ease;
+  position:relative;overflow:hidden;
 }
-.qr-container:hover{border-color:var(--blue-muted)}
-.qr-placeholder{text-align:center;padding:24px}
-.qr-placeholder-icon{font-size:36px;display:block;margin-bottom:6px;opacity:0.5}
-.qr-placeholder-text{font-size:15px;font-weight:600;color:var(--text-secondary)}
-.qr-done{animation:qr-pop 0.4s cubic-bezier(0.34,1.56,0.64,1)}
-@keyframes qr-pop{0%{transform:scale(0.8);opacity:0}100%{transform:scale(1);opacity:1}}
-.qr-hint{font-size:12px;color:var(--text-tertiary)}
+.qr-container::after{
+  content:"";position:absolute;
+  top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg, transparent, var(--blue-light), transparent);
+  animation:qr-scan 2s ease-in-out infinite;
+  opacity:0;
+  transition:opacity 0.3s;
+}
+.qr-container:hover{border-color:var(--border-blue)}
+.qr-container.has-qr::after{opacity:1}
+@keyframes qr-scan{0%{top:0}50%{top:calc(100% - 2px)}100%{top:0}}
+.qr-placeholder{text-align:center;padding:20px}
+.qr-placeholder-icon{font-size:32px;display:block;margin-bottom:4px;opacity:0.3}
+.qr-placeholder-text{font-size:13px;font-weight:500;color:var(--text-tertiary)}
+.qr-hint{font-size:11px;color:var(--text-tertiary)}
 
-/* ── 守护安芯卡 ── */
+/* 产品展示 */
 .product-showcase{
-  background:var(--bg);border:1px solid var(--border-light);
-  border-radius:var(--radius-sm);padding:18px;
-  display:flex;flex-direction:column;gap:14px;
+  background:var(--bg-input);border:1px solid var(--border);
+  border-radius:var(--radius-sm);padding:16px;
+  display:flex;flex-direction:column;gap:10px;
 }
-.product-title{font-size:15px;font-weight:700;color:var(--text);text-align:center}
-.product-card-main{display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap}
+.product-title{font-size:13px;font-weight:600;color:var(--text-secondary);text-align:center}
+.product-card-main{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap}
 .product-card-visual{
-  width:84px;height:56px;background:var(--surface);
-  border:1.5px solid var(--blue-muted);border-radius:8px;
-  position:relative;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  box-shadow:var(--shadow-xs);
+  position:relative;width:76px;height:50px;
+  background:rgba(255,255,255,0.04);border:1px solid var(--border-blue);
+  border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;
 }
 .product-card-visual::before{
-  content:"";position:absolute;
-  top:4px;right:6px;width:12px;height:12px;
-  background:var(--blue);border-radius:2px;opacity:0.4;
+  content:"";position:absolute;top:3px;right:4px;
+  width:10px;height:10px;background:var(--blue);border-radius:2px;opacity:0.5;
 }
-.card-chip{font-size:22px}
-.card-label{font-size:9px;font-weight:700;color:var(--blue)}
-.product-stickers{display:flex;flex-direction:column;align-items:center;gap:2px}
-.sticker-row{display:flex;gap:3px}
-.sticker-icon{font-size:18px}
-.sticker-count{font-size:10px;font-weight:600;color:var(--text-secondary)}
-.product-specs{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.card-chip{font-size:20px}
+.card-label{font-size:8px;font-weight:700;color:var(--blue-light)}
+.product-stickers{display:flex;flex-direction:column;align-items:center;gap:1px}
+.sticker-row{display:flex;gap:2px}
+.sticker-icon{font-size:16px}
+.sticker-count{font-size:9px;font-weight:600;color:var(--text-tertiary)}
+.product-specs{display:flex;flex-wrap:wrap;gap:4px;justify-content:center}
 .spec-badge{
-  font-size:10px;font-weight:600;padding:4px 12px;
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:20px;color:var(--text-secondary);
+  font-size:9px;font-weight:500;padding:3px 10px;
+  background:transparent;border:1px solid var(--border);
+  border-radius:20px;color:var(--text-tertiary);
 }
 
 /* ═══════════════════════════════
-   中间栏 — 救援端
+   救援端
    ═══════════════════════════════ */
-
-/* 状态条 */
 .rescue-status-bar{
   display:flex;align-items:center;justify-content:center;
-  padding:10px 12px;gap:0;margin:0;
-  background:var(--bg);border-radius:var(--radius-sm);
+  padding:8px 10px;gap:0;
+  background:var(--bg-input);border-radius:var(--radius-sm);
+  border:1px solid var(--border);
 }
-.status-step{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:48px;transition:all 0.4s ease}
-.status-step-icon{font-size:16px;transition:all 0.4s ease}
-.status-step-label{font-size:9px;font-weight:700;color:var(--text-tertiary)}
-.status-step.done .status-step-icon{animation:step-pop 0.4s cubic-bezier(0.34,1.56,0.64,1)}
-.status-step.done .status-step-label{color:var(--text)}
+.status-step{display:flex;flex-direction:column;align-items:center;gap:1px;min-width:44px;transition:all 0.4s var(--ease)}
+.status-step-icon{font-size:14px;transition:all 0.4s var(--ease)}
+.status-step-label{font-size:8px;font-weight:700;color:var(--text-tertiary)}
+.status-step.done .status-step-icon{animation:step-pop 0.4s var(--ease-spring)}
+.status-step.done .status-step-label{color:var(--text-secondary)}
 .status-step.active .status-step-icon{animation:step-pulse 0.8s ease-in-out infinite}
-.status-step.active .status-step-label{color:var(--blue);font-weight:900}
-@keyframes step-pop{0%{transform:scale(0.3);opacity:0}100%{transform:scale(1);opacity:1}}
-@keyframes step-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
-.status-connector{width:18px;height:2px;background:var(--border);border-radius:1px;transition:background 0.5s ease}
-.status-connector.done{background:var(--blue)}
+.status-step.active .status-step-label{color:var(--blue-light);font-weight:900}
+@keyframes step-pop{0%{transform:scale(0);opacity:0}100%{transform:scale(1);opacity:1}}
+@keyframes step-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
+.status-connector{width:16px;height:1.5px;background:var(--border);border-radius:1px;transition:background 0.5s}
+.status-connector.done{background:var(--blue);box-shadow:0 0 4px var(--blue-glow)}
 
 /* 手机壳 */
 .phone-mockup{
   width:240px;margin:0 auto;
-  background:#1C1C1E;border-radius:28px;padding:8px;
-  box-shadow:0 0 0 2px #3A3A3C,0 0 0 5px #1C1C1E,0 12px 40px rgba(0,0,0,0.15);
+  background:#1a1a1e;border-radius:28px;padding:8px;
+  box-shadow:0 0 0 2px #2a2a30,0 0 0 5px #1a1a1e,0 12px 40px rgba(0,0,0,0.5);
 }
-.phone-notch{width:72px;height:20px;background:#1C1C1E;border-radius:0 0 14px 14px;margin:0 auto}
-.phone-screen{background:#FFFFFF;border-radius:22px;overflow:hidden;min-height:440px;display:flex;flex-direction:column;position:relative}
-.phone-status-bar{display:flex;justify-content:space-between;padding:6px 16px 2px;font-size:10px;font-weight:700;color:#1C1C1E;background:#FAFAFC}
-.phone-home-bar{width:90px;height:3px;background:#E5E5EA;border-radius:100px;margin:10px auto 6px}
+.phone-notch{width:68px;height:18px;background:#1a1a1e;border-radius:0 0 12px 12px;margin:0 auto}
+.phone-screen{background:#0D0D12;border-radius:22px;overflow:hidden;min-height:420px;display:flex;flex-direction:column;position:relative}
+.phone-status-bar{display:flex;justify-content:space-between;padding:4px 14px 2px;font-size:9px;font-weight:700;color:var(--text-tertiary)}
+.phone-home-bar{width:80px;height:3px;background:rgba(255,255,255,0.1);border-radius:100px;margin:8px auto 4px}
 
 /* 救援按钮 */
-.rescue-actions{display:flex;gap:6px;padding:8px 10px}
+.rescue-actions{display:flex;gap:6px;padding:6px 8px}
 .rescue-btn{
-  flex:1;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:2px;padding:14px 4px;border:none;border-radius:var(--radius-sm);
-  font-family:var(--font);font-weight:700;cursor:pointer;transition:all 0.2s ease;
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:2px;padding:12px 4px;border:none;border-radius:var(--radius-sm);
+  font-family:var(--font);font-weight:700;cursor:pointer;
+  transition:all 0.2s var(--ease);
 }
-.rescue-btn-primary{background:var(--blue);color:#FFFFFF}
-.rescue-btn-primary:hover{background:#1A6FD6}
-.rescue-btn-danger{background:var(--danger);color:#FFFFFF}
-.rescue-btn-danger:hover{background:#C53030}
-.rescue-btn-icon{font-size:22px}
-.rescue-btn-label{font-size:12px;letter-spacing:0.3px}
+.rescue-btn-primary{background:var(--blue);color:#fff}
+.rescue-btn-primary:hover{background:var(--blue-light);box-shadow:0 4px 16px var(--blue-glow)}
+.rescue-btn-danger{background:var(--danger);color:#fff}
+.rescue-btn-danger:hover{background:#FF6B6B;box-shadow:0 4px 16px rgba(255,77,79,0.3)}
+.rescue-btn-icon{font-size:20px}
+.rescue-btn-label{font-size:11px}
+
+/* 痴呆 Hero */
+.dementia-hero{
+  display:none;flex-direction:column;align-items:center;gap:4px;
+  padding:12px 14px;margin:4px 8px;
+  background:var(--danger-bg);border:1px solid var(--danger-border);
+  border-radius:10px;text-align:center;
+}
+.dementia-hero.show{display:flex;animation:badge-pop 0.5s var(--ease-spring)}
+.dementia-hero-icon{font-size:28px}
+.dementia-hero-text{font-size:18px;font-weight:900;color:var(--danger);letter-spacing:0.5px}
+.dementia-hero-sub{font-size:11px;font-weight:500;color:rgba(255,77,79,0.7)}
+@keyframes badge-pop{0%{transform:scale(0.8);opacity:0}100%{transform:scale(1);opacity:1}}
 
 /* 患者卡 */
 .patient-card{
-  display:flex;align-items:center;gap:12px;margin:4px 10px;
-  padding:16px 14px;background:var(--blue-light);
-  border-radius:var(--radius-sm);
+  display:flex;align-items:flex-start;gap:10px;margin:2px 8px;
+  padding:14px;background:var(--bg-input);border-radius:var(--radius-sm);
+  border:1px solid var(--border);
 }
-.patient-avatar{
-  width:44px;height:44px;border-radius:50%;
-  background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:20px;
+.patient-info-full{display:flex;flex-direction:column;gap:4px;width:100%}
+.patient-info-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.patient-name{font-size:20px;font-weight:700;color:var(--text)}
+.desensitized{color:var(--blue-light)}
+.patient-meta{font-size:11px;color:var(--text-secondary)}
+.patient-blood{font-size:13px;font-weight:800;color:var(--danger)}
+.patient-addr-icon{font-size:13px}
+.patient-addr{font-size:12px;color:var(--text-secondary);font-weight:500;word-break:break-all}
+.patient-tags-row{display:flex;flex-wrap:wrap;gap:3px;margin-top:2px}
+.patient-tag{
+  font-size:10px;font-weight:600;padding:2px 7px;border-radius:4px;
+  background:var(--blue-glass);color:var(--blue-light);
+  border:1px solid var(--border-blue);
 }
-.patient-info{display:flex;flex-direction:column;gap:1px}
-.patient-name{font-size:22px;font-weight:700;color:var(--text)}
-.desensitized{color:var(--blue)}
-.patient-meta{font-size:12px;color:var(--text-secondary)}
+.patient-tag.med-tag{
+  background:var(--warning-bg);color:var(--warning);border-color:var(--warning-border);
+}
 
 /* 警告框 */
 .alert-box{
-  margin:6px 10px;padding:14px 16px;border-radius:var(--radius-sm);
-  display:flex;gap:10px;
-  animation:alert-slide 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  margin:4px 8px;padding:12px 14px;border-radius:var(--radius-sm);
+  display:flex;gap:8px;
+  animation:alert-slide 0.35s var(--ease-spring);
 }
-@keyframes alert-slide{0%{transform:translateY(-6px);opacity:0}100%{transform:translateY(0);opacity:1}}
-.alert-icon{font-size:20px;flex-shrink:0}
+@keyframes alert-slide{0%{transform:translateY(-4px);opacity:0}100%{transform:translateY(0);opacity:1}}
+.alert-icon{font-size:18px;flex-shrink:0}
 .alert-content{flex:1}
-.alert-title{font-size:15px;font-weight:800;margin-bottom:4px}
-.alert-body{font-size:13px;line-height:1.65;color:#4A4A4A}
-.alert-body p+p{margin-top:4px}
+.alert-title{font-size:13px;font-weight:800;margin-bottom:3px}
+.alert-body{font-size:11px;line-height:1.6;color:var(--text-secondary)}
+.alert-body p+p{margin-top:3px}
 .alert-tagline{font-weight:700}
 .alert-critical{background:var(--danger-bg);border:1px solid var(--danger-border)}
 .alert-critical .alert-title,.alert-critical .alert-tagline{color:var(--danger)}
@@ -307,550 +400,167 @@ body{
 /* 脉冲 */
 .alert-critical.alert-shaking{animation:alert-pulse 1s ease-in-out infinite}
 @keyframes alert-pulse{
-  0%,100%{box-shadow:0 0 0 0 rgba(224,58,58,0.3);border-color:#FCD5D5}
-  50%{box-shadow:0 0 0 4px rgba(224,58,58,0.15);border-color:#E03A3A}
+  0%,100%{box-shadow:0 0 0 0 rgba(255,77,79,0.3);border-color:var(--danger-border)}
+  50%{box-shadow:0 0 0 4px rgba(255,77,79,0.1);border-color:var(--danger)}
 }
 
-/* Demo 按钮 */
-.demo-controls{display:flex;gap:8px}
+/* Demo */
+.demo-controls{display:flex;gap:6px}
 .demo-btn{
-  flex:1;padding:10px 8px;font-size:12px;font-weight:600;
+  flex:1;padding:8px 6px;font-size:11px;font-weight:500;
   font-family:var(--font);border:1px solid var(--border);
-  border-radius:var(--radius-xs);background:var(--surface);
-  color:var(--text-secondary);cursor:pointer;transition:all 0.2s ease;
+  border-radius:var(--radius-xs);background:transparent;
+  color:var(--text-tertiary);cursor:pointer;transition:all 0.2s var(--ease);
 }
-.demo-btn:hover{border-color:var(--blue-muted);color:var(--blue);background:var(--blue-light)}
+.demo-btn:hover{border-color:var(--border-blue);color:var(--blue-light)}
 
 /* ═══════════════════════════════
-   右侧栏 — 看护端
+   看护端
    ═══════════════════════════════ */
-.table-wrapper{border-radius:var(--radius-sm);overflow:hidden;border:1px solid var(--border-light)}
-.data-table{width:100%;border-collapse:collapse;font-size:14px}
-.data-table thead{background:var(--blue-light)}
+.table-wrapper{border-radius:var(--radius-sm);overflow:hidden;border:1px solid var(--border)}
+.data-table{width:100%;border-collapse:collapse;font-size:12px}
+.data-table thead{background:var(--blue-glass)}
 .data-table th{
-  padding:12px 14px;text-align:left;color:var(--blue);
-  font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:0.5px;
+  padding:10px 12px;text-align:left;color:var(--blue-light);
+  font-weight:600;font-size:10px;letter-spacing:0.5px;text-transform:uppercase;
 }
-.data-table td{padding:12px 14px;border-bottom:1px solid var(--border-light);font-weight:500;color:var(--text)}
-.data-table tbody tr{transition:background 0.15s ease}
-.data-table tbody tr:hover{background:var(--blue-light)}
+.data-table td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--text-secondary)}
+.data-table tbody tr{transition:background 0.15s}
+.data-table tbody tr:hover{background:rgba(47,128,237,0.04)}
 .data-table tbody tr:last-child td{border-bottom:none}
-.risk-badge{display:inline-block;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700}
-.risk-low{background:#ECFDF3;color:#2DA44E}
-.risk-info{background:var(--blue-light);color:var(--blue)}
+.risk-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700}
+.risk-low{background:rgba(52,211,153,0.1);color:var(--success)}
+.risk-info{background:var(--blue-glass);color:var(--blue-light)}
 .risk-medium{background:var(--warning-bg);color:var(--warning)}
 .risk-high{background:var(--danger-bg);color:var(--danger)}
 
 /* 指标 */
-.metrics-section{display:flex;flex-direction:column;gap:18px}
-.metrics-title{font-size:15px;font-weight:700;color:var(--text)}
-.metric-item{display:flex;flex-direction:column;gap:6px}
+.metrics-section{display:flex;flex-direction:column;gap:14px}
+.metrics-title{font-size:13px;font-weight:600;color:var(--text-secondary)}
+.metric-item{display:flex;flex-direction:column;gap:4px}
 .metric-header{display:flex;justify-content:space-between;align-items:baseline}
-.metric-label{font-size:14px;font-weight:600;color:var(--text-secondary)}
-.metric-value{font-size:20px;font-weight:700;color:var(--text);font-variant-numeric:tabular-nums}
-.progress-bar{height:6px;background:var(--border-light);border-radius:6px;overflow:hidden}
-.progress-fill{height:100%;border-radius:6px;position:relative}
+.metric-label{font-size:12px;font-weight:500;color:var(--text-tertiary)}
+.metric-value{font-size:18px;font-weight:700;color:var(--text);font-variant-numeric:tabular-nums;font-family:"SF Mono","JetBrains Mono",monospace}
+.progress-bar{height:4px;background:rgba(255,255,255,0.04);border-radius:4px;overflow:hidden}
+.progress-fill{height:100%;border-radius:4px;position:relative}
 .progress-animated{width:0!important;animation:fill-progress 1.6s cubic-bezier(0.22,0.61,0.36,1) 0.3s forwards}
 @keyframes fill-progress{0%{width:0}100%{width:var(--target)}}
-.progress-green{background:var(--success)}
-.progress-blue{background:var(--blue)}
-.progress-orange{background:var(--warning)}
+.progress-green{background:var(--success);box-shadow:0 0 8px rgba(52,211,153,0.3)}
+.progress-blue{background:var(--blue);box-shadow:0 0 8px var(--blue-glow)}
+.progress-orange{background:var(--warning);box-shadow:0 0 8px rgba(245,166,35,0.3)}
 
 /* ═══════════════════════════════
    扫码蒙层
    ═══════════════════════════════ */
 .scan-overlay{
   position:absolute;inset:0;
-  background:rgba(255,255,255,0.95);
-  position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:12px;z-index:10;border-radius:22px;
+  background:rgba(8,9,13,0.95);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:10px;z-index:10;border-radius:22px;
   animation:scan-fade-in 0.25s ease;
 }
 @keyframes scan-fade-in{0%{opacity:0}100%{opacity:1}}
 .scan-spinner{
-  width:40px;height:40px;border:3px solid var(--border);
+  width:36px;height:36px;border:2px solid rgba(255,255,255,0.08);
   border-top-color:var(--blue);border-radius:50%;
   animation:scan-spin 0.7s linear infinite;
 }
 @keyframes scan-spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
-.scan-text{font-size:15px;font-weight:600;color:var(--text-secondary);letter-spacing:0.3px}
-
-/* 计时器 */
-.scan-timer{
-  font-size:32px;font-weight:800;color:var(--blue);
-  font-variant-numeric:tabular-nums;
-}
-.scan-timer-fast{color:var(--success);animation:timer-pop 0.3s cubic-bezier(0.34,1.56,0.64,1)}
-@keyframes timer-pop{0%{transform:scale(0.6);opacity:0}100%{transform:scale(1);opacity:1}}
+.scan-text{font-size:13px;font-weight:500;color:var(--text-secondary)}
+.scan-timer{font-size:28px;font-weight:800;color:var(--blue-light);font-variant-numeric:tabular-nums}
+.scan-timer-fast{color:var(--success);animation:timer-pop 0.3s var(--ease-spring)}
+@keyframes timer-pop{0%{transform:scale(0.5);opacity:0}100%{transform:scale(1);opacity:1}}
 
 /* ═══════════════════════════════
    页脚
    ═══════════════════════════════ */
 .footer{
-  flex-shrink:0;text-align:center;padding:16px 24px;
-  font-size:12px;color:var(--text-tertiary);
-  border-top:1px solid var(--border-light);
-  background:var(--surface);
+  flex-shrink:0;text-align:center;padding:14px 24px;
+  font-size:11px;color:var(--text-tertiary);
+  border-top:1px solid var(--border);
+  position:relative;z-index:1;
 }
 
 /* ═══════════════════════════════
-   纯救援模式 — 手机适配
+   救援模式 — 暗色急救屏
    ═══════════════════════════════ */
-body.rescue-mode{background:var(--bg)!important;min-height:100vh;min-height:100dvh}
-.header.rescue-mode{height:48px;padding:0 16px;box-shadow:none;border-bottom:1px solid var(--border);background:rgba(255,255,255,0.9)}
-.dashboard.rescue-mode{display:flex!important;flex-direction:column;padding:0!important;margin:0!important;max-width:100%!important;gap:0!important}
-.panel.rescue-mode{max-width:100%!important;width:100%!important;border-radius:0!important;box-shadow:none!important;border:none!important;padding:20px 16px 32px!important;gap:16px!important}
+body.rescue-mode{background:var(--bg)!important}
+body.rescue-mode::before,
+body.rescue-mode::after{opacity:0.5}
 
-.phone-mockup.rescue-mode{
-  width:100%!important;max-width:100%!important;margin:0!important;
-  padding:0!important;background:transparent!important;
-  border-radius:0!important;box-shadow:none!important;
+.header.rescue-mode{
+  height:auto!important;min-height:44px;
+  padding:8px 16px!important;
+  box-shadow:none!important;
 }
-.phone-mockup.rescue-mode .phone-notch{display:none!important}
-.phone-mockup.rescue-mode .phone-home-bar{display:none!important}
-.phone-mockup.rescue-mode .phone-screen{border-radius:0!important;min-height:auto!important;background:transparent!important}
-.phone-mockup.rescue-mode .phone-status-bar{display:none!important}
+.header.rescue-mode .header-inner{justify-content:center!important;flex-wrap:nowrap!important}
+.header.rescue-mode .logo{flex-shrink:0!important;white-space:nowrap!important}
+.header.rescue-mode .logo-text{font-size:16px!important;white-space:nowrap!important}
 
-.rescue-mode .rescue-actions{padding:8px 0!important;gap:12px!important}
-.rescue-mode .rescue-btn{padding:20px 14px!important;border-radius:12px!important}
-.rescue-mode .rescue-btn-icon{font-size:30px!important}
-.rescue-mode .rescue-btn-label{font-size:16px!important;font-weight:800!important}
-.rescue-mode .patient-card{margin:4px 0!important;padding:20px 16px!important;border-radius:12px!important}
-.rescue-mode .patient-avatar{width:52px!important;height:52px!important;font-size:24px!important}
-.rescue-mode .patient-name{font-size:26px!important}
-.rescue-mode .patient-meta{font-size:14px!important}
-.rescue-mode .alert-box{margin:6px 0!important;padding:16px 18px!important;border-radius:12px!important}
-.rescue-mode .alert-icon{font-size:24px!important}
-.rescue-mode .alert-title{font-size:16px!important}
-.rescue-mode .alert-body{font-size:14px!important}
-.rescue-mode .rescue-status-bar{margin:4px 0;padding:12px 10px}
-.rescue-mode .status-step-icon{font-size:20px!important}
-.rescue-mode .status-step-label{font-size:10px!important}
+.dashboard.rescue-mode{
+  display:flex!important;flex-direction:column!important;
+  padding:0!important;margin:0!important;max-width:100%!important;gap:0!important;
+}
+
+.panel.rescue-mode{
+  max-width:100%!important;width:100%!important;
+  border-radius:0!important;box-shadow:none!important;
+  border:none!important;padding:10px 12px 40px!important;gap:10px!important;
+  background:transparent!important;
+}
+
+.rescue-mode .dementia-hero{margin:0!important;padding:16px!important;border-radius:12px!important}
+.rescue-mode .dementia-hero-icon{font-size:34px!important}
+.rescue-mode .dementia-hero-text{font-size:20px!important;font-weight:900!important}
+.rescue-mode .dementia-hero-sub{font-size:12px!important}
+
+.rescue-mode .patient-card{margin:0!important;padding:14px!important;border-radius:12px!important}
+.rescue-mode .patient-name{font-size:22px!important}
+.rescue-mode .patient-meta{font-size:12px!important}
+.rescue-mode .patient-blood{font-size:14px!important;font-weight:800!important}
+.rescue-mode .patient-addr{font-size:13px!important}
+.rescue-mode .patient-tag{font-size:11px!important;padding:3px 8px!important}
+.rescue-mode .patient-tag.med-tag{font-size:11px!important}
+
+.rescue-mode .rescue-actions{padding:6px 0!important;gap:10px!important}
+.rescue-mode .rescue-btn{padding:18px 14px!important;border-radius:10px!important}
+.rescue-mode .rescue-btn-icon{font-size:26px!important}
+.rescue-mode .rescue-btn-label{font-size:14px!important;font-weight:800!important}
+
+.rescue-mode .alert-box{margin:4px 0!important;padding:14px 16px!important;border-radius:10px!important}
+.rescue-mode .alert-icon{font-size:20px!important}
+.rescue-mode .alert-title{font-size:14px!important}
+.rescue-mode .alert-body{font-size:12px!important;line-height:1.6!important}
 
 @supports(padding:max(0px)){
   .dashboard.rescue-mode{padding-left:max(0px,env(safe-area-inset-left))!important;padding-right:max(0px,env(safe-area-inset-right))!important}
-  .panel.rescue-mode{padding-bottom:max(32px,env(safe-area-inset-bottom))!important}
+  .panel.rescue-mode{padding-bottom:max(40px,env(safe-area-inset-bottom))!important}
 }
 
-/* ── 隐藏 rescue mode 下的非救援元素 ── */
+/* ── 隐藏非救援 ── */
 .header.rescue-mode .view-nav,
 .header.rescue-mode .header-badge,
 .header.rescue-mode .header-status,
 .header.rescue-mode .url-indicator{display:none!important}
-.header.rescue-mode .header-inner{justify-content:center}
-.header.rescue-mode .logo-text{font-size:18px}
 .footer.rescue-mode{display:none!important}
+.rescue-mode .product-showcase{display:none!important}
 
 /* ═══════════════════════════════
    响应式
    ═══════════════════════════════ */
 @media(max-width:1100px){.dashboard{grid-template-columns:1fr 1fr}}
 @media(max-width:768px){
-  .dashboard{grid-template-columns:1fr;padding:16px;gap:16px}
+  .dashboard{grid-template-columns:1fr;padding:16px;gap:14px}
   .header{padding:0 16px}
   .header-badge{display:none}
-  .panel{padding:20px;border-radius:var(--radius-sm)}
-  .phone-mockup{width:220px}
+  .panel{padding:18px}
   .view-nav-btn{font-size:11px;padding:5px 10px}
 }
 
-@media(prefers-contrast:high){
-  :root{--text:#000;--text-secondary:#1D1D1F;--border:#999}
-  .tag-text{border-width:2px}.form-input{border-width:2px}
-}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important}
+  body::before,body::after{display:none}
 }
 
-/* QR 容器点击 */
 .qr-container[style*="pointer"]:active{transform:scale(0.97)}
-
-/* URL 指示器 */
-.url-indicator{color:var(--text-tertiary);font-size:12px;font-weight:600;margin-right:12px}
-
-/* ── 阿尔茨海默病特殊标签 ── */
-.tag-chip-critical .tag-text-important {
-  border-color: #E03A3A;
-  color: #C53030;
-  background: #FFF5F5;
-  font-weight: 800;
-}
-
-.tag-chip-critical input:checked + .tag-text-important {
-  background: #FFF0F0;
-  border-color: #E03A3A;
-  color: #C53030;
-  box-shadow: 0 0 0 2px rgba(224,58,58,0.12);
-}
-
-/* ── 痴呆标识 — 第一眼核心信息 ── */
-.dementia-hero {
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  padding: 14px 16px;
-  margin: 4px 10px;
-  background: linear-gradient(135deg, #FFF0F0 0%, #FFF5F5 100%);
-  border: 2px solid #FCD5D5;
-  border-radius: 12px;
-  text-align: center;
-}
-
-.dementia-hero.show {
-  display: flex;
-  animation: badge-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.dementia-hero-icon {
-  font-size: 32px;
-}
-
-.dementia-hero-text {
-  font-size: 20px;
-  font-weight: 900;
-  color: #C53030;
-  letter-spacing: 1px;
-}
-
-.dementia-hero-sub {
-  font-size: 12px;
-  font-weight: 600;
-  color: #9B2C2C;
-  opacity: 0.8;
-}
-
-@keyframes badge-pop {
-  0% { transform: scale(0.8); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
-}
-
-/* ── 救援模式适配 ── */
-.rescue-mode .dementia-hero {
-  margin: 4px 0;
-  padding: 18px 20px;
-  border-radius: 14px;
-}
-
-.rescue-mode .dementia-hero-icon {
-  font-size: 40px;
-}
-
-.rescue-mode .dementia-hero-text {
-  font-size: 24px;
-}
-
-.rescue-mode .dementia-hero-sub {
-  font-size: 14px;
-}
-
-/* ── 救援端血型显示 ── */
-.patient-blood {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--text-secondary);
-  margin-top: 2px;
-  display: none;
-}
-
-.patient-blood.show {
-  display: block;
-}
-
-/* ── 救援模式适配 ── */
-.rescue-mode .patient-dementia-badge {
-  
-.rescue-mode .patient-blood {
-  font-size: 15px;
-}
-
-/* ── 新患者信息卡（全量展示）── */
-.patient-info-full {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  width: 100%;
-}
-
-.patient-info-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.patient-addr-icon {
-  font-size: 14px;
-  flex-shrink: 0;
-}
-
-.patient-addr {
-  font-size: 13px;
-  color: var(--text-secondary);
-  font-weight: 500;
-  word-break: break-all;
-}
-
-.patient-tags-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  margin-top: 2px;
-}
-
-.patient-tag {
-  font-size: 11px;
-  font-weight: 700;
-  padding: 2px 8px;
-  border-radius: 4px;
-  background: var(--blue-light);
-  color: var(--blue);
-}
-
-.patient-tag.med-tag {
-  background: #FFF5F0;
-  color: #B85C00;
-}
-
-/* ── 救援模式：彻底去掉手机壳 ── */
-.phone-mockup.rescue-mode {
-  display: contents !important;
-}
-
-.phone-mockup.rescue-mode .phone-notch,
-.phone-mockup.rescue-mode .phone-home-bar,
-.phone-mockup.rescue-mode .phone-status-bar {
-  display: none !important;
-}
-
-.phone-mockup.rescue-mode .phone-screen {
-  border-radius: 0 !important;
-  min-height: auto !important;
-  background: transparent !important;
-  overflow: visible !important;
-}
-
-/* 救援模式面板：贴边全屏 */
-.panel.rescue-mode {
-  max-width: 100% !important;
-  width: 100% !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  border: none !important;
-  padding: 12px 14px 32px !important;
-  gap: 12px !important;
-  background: var(--bg) !important;
-}
-
-/* 救援模式痴呆 Hero */
-.rescue-mode .dementia-hero {
-  margin: 0 !important;
-  padding: 16px 18px !important;
-  border-radius: 12px !important;
-}
-
-.rescue-mode .dementia-hero-icon {
-  font-size: 36px !important;
-}
-
-.rescue-mode .dementia-hero-text {
-  font-size: 22px !important;
-  font-weight: 900 !important;
-}
-
-.rescue-mode .dementia-hero-sub {
-  font-size: 13px !important;
-}
-
-/* 救援模式患者卡 */
-.rescue-mode .patient-card {
-  margin: 0 !important;
-  padding: 14px 14px !important;
-  border-radius: 12px !important;
-}
-
-.rescue-mode .patient-name {
-  font-size: 24px !important;
-}
-
-.rescue-mode .patient-meta {
-  font-size: 13px !important;
-}
-
-.rescue-mode .patient-blood {
-  font-size: 15px !important;
-  font-weight: 800 !important;
-  color: var(--danger) !important;
-}
-
-.rescue-mode .patient-addr {
-  font-size: 14px !important;
-}
-
-.rescue-mode .patient-tag {
-  font-size: 12px !important;
-  padding: 3px 10px !important;
-}
-
-/* 救援模式按钮 */
-.rescue-mode .rescue-actions {
-  padding: 8px 0 !important;
-  gap: 10px !important;
-}
-
-.rescue-mode .rescue-btn {
-  padding: 18px 14px !important;
-  border-radius: 10px !important;
-}
-
-.rescue-mode .rescue-btn-icon {
-  font-size: 28px !important;
-}
-
-.rescue-mode .rescue-btn-label {
-  font-size: 15px !important;
-}
-
-/* 救援模式状态条 */
-.rescue-mode .rescue-status-bar {
-  margin: 0 !important;
-  padding: 10px 8px !important;
-}
-
-/* 救援模式警告框 */
-.rescue-mode .alert-box {
-  margin: 4px 0 !important;
-  padding: 14px 16px !important;
-  border-radius: 10px !important;
-}
-
-.rescue-mode .alert-icon {
-  font-size: 22px !important;
-}
-
-.rescue-mode .alert-title {
-  font-size: 15px !important;
-}
-
-.rescue-mode .alert-body {
-  font-size: 13px !important;
-  line-height: 1.6 !important;
-}
-
-/* 救援模式守护安芯卡展品隐藏 */
-.rescue-mode .product-showcase {
-  display: none !important;
-}
-
-/* ══════════════════════════════════════════
-   救援模式 — 极简急救屏（终极版）
-   ══════════════════════════════════════════ */
-
-body.rescue-mode {
-  background: #F5F5F7 !important;
-  min-height: 100vh;
-  min-height: 100dvh;
-}
-
-/* Header: 极简，防止 logo 竖排 */
-.header.rescue-mode {
-  height: auto !important;
-  min-height: 44px;
-  padding: 8px 16px !important;
-  box-shadow: none !important;
-  border-bottom: 1px solid var(--border) !important;
-  background: rgba(255,255,255,0.95) !important;
-}
-
-.header.rescue-mode .header-inner {
-  justify-content: center !important;
-  flex-wrap: nowrap !important;
-}
-
-.header.rescue-mode .logo {
-  flex-shrink: 0 !important;
-  white-space: nowrap !important;
-}
-
-.header.rescue-mode .logo-text {
-  font-size: 17px !important;
-  white-space: nowrap !important;
-  display: inline !important;
-}
-
-/* 仪表盘 */
-.dashboard.rescue-mode {
-  display: flex !important;
-  flex-direction: column !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  max-width: 100% !important;
-  gap: 0 !important;
-}
-
-/* 救援面板 */
-.panel.rescue-mode {
-  max-width: 100% !important;
-  width: 100% !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  border: none !important;
-  padding: 10px 12px 40px !important;
-  gap: 10px !important;
-  background: #F5F5F7 !important;
-}
-
-/* 痴呆 Hero */
-.rescue-mode .dementia-hero {
-  margin: 0 !important;
-  padding: 16px 16px !important;
-  border-radius: 12px !important;
-}
-
-.rescue-mode .dementia-hero-icon { font-size: 36px !important; }
-.rescue-mode .dementia-hero-text { font-size: 21px !important; font-weight: 900 !important; line-height: 1.3 !important; }
-.rescue-mode .dementia-hero-sub { font-size: 13px !important; }
-
-/* 患者卡 */
-.rescue-mode .patient-card {
-  margin: 0 !important;
-  padding: 14px 14px !important;
-  border-radius: 12px !important;
-  background: #FFFFFF !important;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06) !important;
-}
-
-.rescue-mode .patient-name { font-size: 24px !important; font-weight: 800 !important; }
-.rescue-mode .patient-meta { font-size: 13px !important; }
-.rescue-mode .patient-blood {
-  font-size: 15px !important;
-  font-weight: 800 !important;
-  color: #E03A3A !important;
-  white-space: nowrap !important;
-}
-.rescue-mode .patient-addr { font-size: 14px !important; }
-.rescue-mode .patient-tag { font-size: 12px !important; padding: 3px 10px !important; }
-.rescue-mode .patient-tag.med-tag { font-size: 12px !important; }
-
-/* 按钮 */
-.rescue-mode .rescue-actions { padding: 6px 0 !important; gap: 10px !important; }
-.rescue-mode .rescue-btn { padding: 18px 14px !important; border-radius: 10px !important; }
-.rescue-mode .rescue-btn-icon { font-size: 28px !important; }
-.rescue-mode .rescue-btn-label { font-size: 15px !important; font-weight: 800 !important; }
-
-/* 警告框 */
-.rescue-mode .alert-box { margin: 4px 0 !important; padding: 14px 16px !important; border-radius: 10px !important; }
-.rescue-mode .alert-icon { font-size: 22px !important; }
-.rescue-mode .alert-title { font-size: 15px !important; }
-.rescue-mode .alert-body { font-size: 13px !important; line-height: 1.6 !important; }
-
-/* 安全区域 */
-@supports (padding: max(0px)) {
-  .dashboard.rescue-mode {
-    padding-left: max(0px, env(safe-area-inset-left)) !important;
-    padding-right: max(0px, env(safe-area-inset-right)) !important;
-  }
-  .panel.rescue-mode {
-    padding-bottom: max(40px, env(safe-area-inset-bottom)) !important;
-  }
-}
+.url-indicator{color:var(--text-tertiary);font-size:11px;font-weight:500;margin-right:10px}
