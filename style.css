@@ -1,5 +1,5 @@
 /* ============================================================
-   码上回家 — Premium Light (DJI × Apple)
+   ���ϻؼ� �� Premium Light (DJI �� Apple)
    ============================================================ */
 
 :root {
@@ -66,20 +66,18 @@ body::before{
 /* Header */
 .header{
   position:sticky;top:0;z-index:100;
-  background:rgba(255,255,255,0.8);
-  backdrop-filter:blur(20px) saturate(180%);
-  -webkit-backdrop-filter:blur(20px) saturate(180%);
-  border-bottom:0.5px solid var(--border);
+  background:linear-gradient(135deg,var(--blue),#1a6fd4);
+  border-bottom:0.5px solid var(--border-blue);
   padding:0 32px;height:52px;flex-shrink:0;
 }
 .header-inner{max-width:1200px;margin:0 auto;height:100%;display:flex;align-items:center;justify-content:space-between}
 .logo{display:flex;align-items:center;gap:8px}
 .logo-icon{font-size:20px}
-.logo-text{font-size:17px;font-weight:700;color:var(--text);letter-spacing:-0.3px}
-.header-badge{font-size:11px;font-weight:500;color:var(--text-tertiary);background:var(--bg);padding:3px 12px;border-radius:12px}
-.header-status{display:flex;align-items:center;gap:6px}
+.logo-text{font-size:17px;font-weight:700;color:#fff;letter-spacing:-0.3px}
+.header-badge{font-size:11px;font-weight:500;color:rgba(255,255,255,0.85);background:rgba(255,255,255,0.15);padding:3px 12px;border-radius:12px}
+.header-status{display:flex;align-items:center;gap:6px}.url-indicator{color:rgba(255,255,255,0.75)!important;font-size:12px;font-weight:600}
 .status-dot{width:5px;height:5px;border-radius:50%;background:var(--success)}
-.status-text{font-size:10px;color:var(--text-tertiary)}
+.status-text{font-size:10px;color:rgba(255,255,255,0.7)}
 
 /* View nav */
 .view-nav{display:flex;gap:2px;background:var(--bg);border-radius:8px;padding:2px}
@@ -241,6 +239,9 @@ body::before{
 .patient-blood{font-size:12px;font-weight:800;color:var(--danger)}
 .patient-meta{font-size:10px;color:var(--text-secondary)}
 .patient-addr{font-size:11px;color:var(--text-secondary)}
+.patient-nav-link{font-size:13px;font-weight:600;color:var(--blue);text-decoration:none;display:inline-flex;align-items:center;gap:4px;transition:all 0.2s var(--ease)}
+.patient-nav-link:hover{color:var(--blue-light);text-decoration:underline}
+.patient-nav-icon{font-size:14px}
 .patient-tags-row{display:flex;flex-wrap:wrap;gap:2px;margin-top:2px}
 .patient-tag{font-size:9px;font-weight:600;padding:2px 6px;border-radius:3px;background:var(--blue-ghost);color:var(--blue)}
 .patient-tag.med-tag{background:var(--warning-bg);color:var(--warning)}
@@ -280,7 +281,7 @@ body::before{
 body.rescue-mode{background:var(--bg)}
 .header.rescue-mode{height:auto;min-height:44px;padding:8px 16px}
 .header.rescue-mode .header-inner{justify-content:center}
-.header.rescue-mode .logo-text{font-size:18px}
+.header.rescue-mode .logo-text{font-size:18px;color:#fff}
 .dashboard.rescue-mode{display:flex!important;flex-direction:column;padding:0;margin:0;max-width:100%;gap:0}
 .panel.rescue-mode{max-width:100%;width:100%;border-radius:0;box-shadow:none;border:none;padding:12px 14px 48px;gap:14px;background:transparent}
 
@@ -356,3 +357,4 @@ body.rescue-mode{background:var(--bg)}
 @media(max-width:768px){.dashboard{grid-template-columns:1fr;padding:14px;gap:14px}.header{padding:0 14px}.panel{padding:18px}}
 @media(prefers-reduced-motion){*,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important}}
 .qr-container[style*="pointer"]:active{transform:scale(0.97)}
+

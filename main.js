@@ -21,6 +21,8 @@
   var patientBlood = document.getElementById("patientBlood");
   var patientAddr = document.getElementById("patientAddr");
   var patientAddrRow = document.getElementById("patientAddrRow");
+  var patientNavRow = document.getElementById("patientNavRow");
+  var patientNavLink = document.getElementById("patientNavLink");
   var patientTags = document.getElementById("patientTags");
   var btnCallFamily = document.getElementById("btnCallFamily");
   var btnCallPolice = document.getElementById("btnCallPolice");
@@ -33,6 +35,7 @@
   var addrCity = document.getElementById("addrCity");
   var addrDistrict = document.getElementById("addrDistrict");
   var addrDetail = document.getElementById("addrDetail");
+  var homeAddrFull = document.getElementById("homeAddrFull");
   var scanTimerInterval = null;
   var scanStartTime = 0;
   var _currentQRUrl = null;
@@ -167,11 +170,12 @@
     var contact1=(document.getElementById("contact1").value||"").trim();
     var contact2=(document.getElementById("contact2").value||"").trim();
     var homeAddress=getFullAddress();
+    var homeAddrFullVal=(document.getElementById("homeAddrFull").value||"").trim();
     var diseases=[];
     document.querySelectorAll("input[name=disease]:checked").forEach(function(cb){diseases.push(cb.value);});
     var medications=[];
     document.querySelectorAll("input[name=medication]:checked").forEach(function(cb){medications.push(cb.value);});
-    return {name:name,bloodType:bloodType,age:age,contact1:contact1,contact2:contact2,homeAddress:homeAddress,diseases:diseases,medications:medications};
+    return {name:name,bloodType:bloodType,age:age,contact1:contact1,contact2:contact2,homeAddress:homeAddress,homeAddrFull:homeAddrFullVal,diseases:diseases,medications:medications};
   }
 
   function desensitize(n){
@@ -193,7 +197,7 @@
   }
 
   // URL helpers
-  var BASE_URL = "https://xss-1.github.io/mashanghuijia/index.html";
+  var BASE_URL = window.location.origin + window.location.pathname.split('/').slice(0, -1).join('/') + "/index.html";
 
   function buildURL(data){
     return BASE_URL+"?data="+encodeURIComponent(utf8ToBase64(JSON.stringify(data)));
@@ -227,7 +231,8 @@
   btnGenerate.addEventListener("click",function(){
     try {
       var data=getFormData();
-      if(!data.name&&!data.age&&!data.contact1){alert("请至少填写姓名、年龄和联系电话");return;}
+      if(!data.name||!data.age||!data.contact1){alert("请填写姓名、年龄和联系电话");return;}
+      if(!data.homeAddrFull){alert("请填写家庭住址");return;}
       localStorage.setItem("mashanghuijia_patient",JSON.stringify(data));
       genQR(data);
     } catch(e) {
@@ -282,8 +287,11 @@
     else patientBlood.classList.remove("show");
 
     // Address
-    if(data.homeAddress){patientAddr.textContent=data.homeAddress;patientAddrRow.style.display="flex";}
-    else patientAddrRow.style.display="none";
+    var addrToShow=data.homeAddrFull||data.homeAddress;
+    if(addrToShow){patientAddr.textContent=addrToShow;patientAddrRow.style.display="flex";
+      if(data.homeAddrFull){patientNavLink.href="https://uri.amap.com/search?keyword="+encodeURIComponent(data.homeAddrFull);patientNavRow.style.display="flex";}
+      else patientNavRow.style.display="none";
+    }else{patientAddrRow.style.display="none";patientNavRow.style.display="none";}
 
     // Tags
     var tg="";
@@ -350,7 +358,7 @@
     alertWarning.style.display="none";resetStatus();
     patientDisplay.textContent="--";patientMeta.textContent="待扫码加载";
     dementiaBadge.classList.remove("show");patientBlood.classList.remove("show");
-    patientAddrRow.style.display="none";patientTags.innerHTML="";
+    patientAddrRow.style.display="none";patientNavRow.style.display="none";patientTags.innerHTML="";
   });
 
   // Enter rescue mode (no shell)
@@ -392,6 +400,7 @@
     if(data.contact1)document.getElementById("contact1").value=data.contact1;
     if(data.contact2)document.getElementById("contact2").value=data.contact2;
     if(data.homeAddress)setAddrFromString(data.homeAddress);
+    if(data.homeAddrFull)document.getElementById("homeAddrFull").value=data.homeAddrFull;
     (data.diseases||[]).forEach(function(d){var cb=document.querySelector("input[name=disease][value='"+d+"']");if(cb)cb.checked=true;});
     (data.medications||[]).forEach(function(m){var cb=document.querySelector("input[name=medication][value='"+m+"']");if(cb)cb.checked=true;});
     genQR(data);
