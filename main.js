@@ -24,6 +24,8 @@
   var patientNavRow = document.getElementById("patientNavRow");
   var patientNavLink = document.getElementById("patientNavLink");
   var patientTags = document.getElementById("patientTags");
+  var patientContactRow = document.getElementById("patientContactRow");
+  var patientContact = document.getElementById("patientContact");
   var btnCallFamily = document.getElementById("btnCallFamily");
   var btnCallPolice = document.getElementById("btnCallPolice");
   var rescueStatusBar = document.getElementById("rescueStatusBar");
@@ -271,6 +273,17 @@
     localStorage.setItem("mashanghuijia_patient",JSON.stringify(data));
     patientDisplay.innerHTML=desensitize(data.name);
 
+    // Contact phone
+    if(data.contact1||data.contact2){
+      var phones=[];
+      if(data.contact1)phones.push(data.contact1);
+      if(data.contact2)phones.push(data.contact2);
+      patientContact.textContent=phones.join(" / ");
+      patientContactRow.style.display="flex";
+    }else{
+      patientContactRow.style.display="none";
+    }
+
     var meta=[];
     if(data.age)meta.push(data.age+" 岁");
     var dl=(data.diseases||[]).map(function(d){return DISEASE_MAP[d]||d;});
@@ -358,6 +371,7 @@
     alertWarning.style.display="none";resetStatus();
     patientDisplay.textContent="--";patientMeta.textContent="待扫码加载";
     dementiaBadge.classList.remove("show");patientBlood.classList.remove("show");
+    patientContactRow.style.display="none";
     patientAddrRow.style.display="none";patientNavRow.style.display="none";patientTags.innerHTML="";
   });
 

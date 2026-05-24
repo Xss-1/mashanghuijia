@@ -26,7 +26,7 @@
       </nav>
 
       <div class="header-badge">智慧医疗 · 红旅赛道</div>
-      <span class="url-indicator" id="urlIndicator" style="color:var(--text-secondary);font-size:12px;font-weight:600;margin-right:16px;">🔗 检测中...</span><div class="header-status">
+      <div class="header-status">
         <span class="status-dot"></span>
         <span class="status-text">系统就绪</span>
       </div>
@@ -290,6 +290,10 @@
               <div class="patient-info-row">
                 <span class="patient-name" id="patientDisplay">--</span>
                 <span class="patient-blood" id="patientBlood"></span>
+              </div>
+              <div class="patient-info-row" id="patientContactRow" style="display:none">
+                <span class="patient-contact-icon">📞</span>
+                <span class="patient-contact" id="patientContact"></span>
               </div>
               <div class="patient-info-row" id="patientMetaRow">
                 <span class="patient-meta" id="patientMeta">待扫码加载</span>

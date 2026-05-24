@@ -239,6 +239,8 @@ body::before{
 .patient-blood{font-size:12px;font-weight:800;color:var(--danger)}
 .patient-meta{font-size:10px;color:var(--text-secondary)}
 .patient-addr{font-size:11px;color:var(--text-secondary)}
+.patient-contact{font-size:14px;font-weight:700;color:var(--success)}
+.patient-contact-icon{font-size:14px}
 .patient-nav-link{font-size:13px;font-weight:600;color:var(--blue);text-decoration:none;display:inline-flex;align-items:center;gap:4px;transition:all 0.2s var(--ease)}
 .patient-nav-link:hover{color:var(--blue-light);text-decoration:underline}
 .patient-nav-icon{font-size:14px}
@@ -315,6 +317,8 @@ body.rescue-mode{background:var(--bg)}
 }
 .rescue-mode .patient-name{font-size:26px;font-weight:800}
 .rescue-mode .patient-blood{font-size:16px;font-weight:800}
+.rescue-mode .patient-contact{font-size:20px;font-weight:800}
+.rescue-mode .patient-contact-icon{font-size:20px}
 .rescue-mode .patient-meta{font-size:14px}
 .rescue-mode .patient-addr{font-size:15px}
 .rescue-mode .patient-info-row{gap:10px}
