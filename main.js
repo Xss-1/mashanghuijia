@@ -606,8 +606,10 @@
     var ud=getDataFromURL();
     if(ud){
       localStorage.setItem("mashanghuijia_patient",JSON.stringify(ud));
+      var stats = recordScan();
       enterRescueMode();
       renderRescue(ud);
+      updateRescueScanStats(stats);
       return;
     }
     var sd=getStoredData();
