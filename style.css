@@ -442,6 +442,13 @@ body.rescue-mode{background:var(--bg)}
   .followup-stats{flex-direction:column;gap:6px}
   .stat-card{padding:10px 8px}
   .stat-value{font-size:20px}
+  .address-selects{flex-direction:column;gap:6px}
+  .addr-select{width:100%}
+  .qr-actions{flex-direction:column;width:100%}
+  .action-btn{width:100%;justify-content:center}
+  .product-showcase{padding:12px}
+  .product-card-main{flex-direction:column;gap:12px}
+  .product-stickers{min-width:auto}
 }
 
 @media(max-width:480px){
@@ -449,6 +456,24 @@ body.rescue-mode{background:var(--bg)}
   .logo-text{font-size:15px}
   .panel-title{font-size:14px}
   .panel-subtitle{font-size:11px}
+  .form-input,select.form-input{height:44px;font-size:14px}
+  .btn-generate{height:48px;font-size:15px}
+  .tag-text{padding:6px 10px;font-size:12px}
+  .qr-container{min-height:120px}
+  .followup-dashboard{padding:12px}
+  .stat-value{font-size:18px}
+  /* Rescue mode mobile */
+  .rescue-mode .patient-name{font-size:22px}
+  .rescue-mode .patient-blood{font-size:14px}
+  .rescue-mode .patient-contact{font-size:16px}
+  .rescue-mode .dementia-hero-text{font-size:18px}
+  .rescue-mode .dementia-hero-sub{font-size:12px}
+  .rescue-mode .dementia-hero.show{padding:14px 12px}
+  .rescue-mode .dementia-hero.show .dementia-hero-icon{font-size:30px}
+  .rescue-mode .patient-card{padding:16px 12px}
+  .alert-box{padding:8px 10px}
+  .alert-title{font-size:11px}
+  .alert-body{font-size:9px}
 }
 
 /* Disable animations on mobile for better performance */
