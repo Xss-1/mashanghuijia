@@ -147,9 +147,9 @@
       panelFamily.style.display="";panelRescue.style.display="";
       document.querySelector(".dashboard").style.gridTemplateColumns="";
     }else{
-      panelFamily.style.display="none";panelRescue.style.display="none";if(v==="family")panelFamily.style.display="";
+      panelFamily.style.display="none";panelRescue.style.display="none";
+      if(v==="family")panelFamily.style.display="";
       if(v==="rescue")panelRescue.style.display="";
-      if(v==="care")
       document.querySelector(".dashboard").style.gridTemplateColumns="1fr";
     }
   };
@@ -193,11 +193,7 @@
   }
 
   // URL helpers
-  var BASE_URL = (function(){
-    var u = window.location;
-    if(u.protocol==="file:") return "http://localhost:8080/index.html";
-    return u.origin + u.pathname;
-  })();
+  var BASE_URL = "https://xss-1.github.io/mashanghuijia/index.html";
 
   function buildURL(data){
     return BASE_URL+"?data="+encodeURIComponent(utf8ToBase64(JSON.stringify(data)));
@@ -215,18 +211,29 @@
     var url=buildURL(data);
     _currentQRUrl=url;
     qrcodeContainer.innerHTML="";
-    new QRCode(qrcodeContainer,{text:url,width:150,height:150,colorDark:"#E8E8ED",colorLight:"#111118",correctLevel:QRCode.CorrectLevel.M});
-    qrcodeContainer.classList.add("has-qr");
-    qrcodeContainer.style.cursor="pointer";
-    qrcodeContainer.title="点击模拟路人扫码";
-    qrHint.textContent="✅ 智芯码已生成 · 点击二维码模拟路人扫码";
+    try {
+      if(typeof QRCode==="undefined"){qrHint.textContent="⚠️ QR库加载失败，请检查网络";return;}
+      new QRCode(qrcodeContainer,{text:url,width:150,height:150,colorDark:"#1D1D1F",colorLight:"#FFFFFF",correctLevel:QRCode.CorrectLevel.M});
+      qrcodeContainer.classList.add("has-qr");
+      qrcodeContainer.style.cursor="pointer";
+      qrcodeContainer.title="点击模拟路人扫码";
+      qrHint.textContent="✅ 智芯码已生成 · 点击二维码模拟路人扫码";
+    } catch(e) {
+      qrHint.textContent="⚠️ 生成失败: "+e.message;
+      console.error("QR gen error:",e);
+    }
   }
 
   btnGenerate.addEventListener("click",function(){
-    var data=getFormData();
-    if(!data.name&&!data.age&&!data.contact1){alert("请至少填写姓名、年龄和联系电话");return;}
-    localStorage.setItem("mashanghuijia_patient",JSON.stringify(data));
-    genQR(data);
+    try {
+      var data=getFormData();
+      if(!data.name&&!data.age&&!data.contact1){alert("请至少填写姓名、年龄和联系电话");return;}
+      localStorage.setItem("mashanghuijia_patient",JSON.stringify(data));
+      genQR(data);
+    } catch(e) {
+      alert("生成失败: "+e.message);
+      console.error(e);
+    }
   });
   // Scan simulation
   function startTimer(){
