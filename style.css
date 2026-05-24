@@ -563,3 +563,181 @@ body.rescue-mode{background:var(--bg)!important;min-height:100vh;min-height:100d
 .rescue-mode .patient-blood {
   font-size: 15px;
 }
+
+/* ── 新患者信息卡（全量展示）── */
+.patient-info-full {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.patient-info-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.patient-addr-icon {
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.patient-addr {
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  word-break: break-all;
+}
+
+.patient-tags-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 2px;
+}
+
+.patient-tag {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: var(--blue-light);
+  color: var(--blue);
+}
+
+.patient-tag.med-tag {
+  background: #FFF5F0;
+  color: #B85C00;
+}
+
+/* ── 救援模式：彻底去掉手机壳 ── */
+.phone-mockup.rescue-mode {
+  display: contents !important;
+}
+
+.phone-mockup.rescue-mode .phone-notch,
+.phone-mockup.rescue-mode .phone-home-bar,
+.phone-mockup.rescue-mode .phone-status-bar {
+  display: none !important;
+}
+
+.phone-mockup.rescue-mode .phone-screen {
+  border-radius: 0 !important;
+  min-height: auto !important;
+  background: transparent !important;
+  overflow: visible !important;
+}
+
+/* 救援模式面板：贴边全屏 */
+.panel.rescue-mode {
+  max-width: 100% !important;
+  width: 100% !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  border: none !important;
+  padding: 12px 14px 32px !important;
+  gap: 12px !important;
+  background: var(--bg) !important;
+}
+
+/* 救援模式痴呆 Hero */
+.rescue-mode .dementia-hero {
+  margin: 0 !important;
+  padding: 16px 18px !important;
+  border-radius: 12px !important;
+}
+
+.rescue-mode .dementia-hero-icon {
+  font-size: 36px !important;
+}
+
+.rescue-mode .dementia-hero-text {
+  font-size: 22px !important;
+  font-weight: 900 !important;
+}
+
+.rescue-mode .dementia-hero-sub {
+  font-size: 13px !important;
+}
+
+/* 救援模式患者卡 */
+.rescue-mode .patient-card {
+  margin: 0 !important;
+  padding: 14px 14px !important;
+  border-radius: 12px !important;
+}
+
+.rescue-mode .patient-name {
+  font-size: 24px !important;
+}
+
+.rescue-mode .patient-meta {
+  font-size: 13px !important;
+}
+
+.rescue-mode .patient-blood {
+  font-size: 15px !important;
+  font-weight: 800 !important;
+  color: var(--danger) !important;
+}
+
+.rescue-mode .patient-addr {
+  font-size: 14px !important;
+}
+
+.rescue-mode .patient-tag {
+  font-size: 12px !important;
+  padding: 3px 10px !important;
+}
+
+/* 救援模式按钮 */
+.rescue-mode .rescue-actions {
+  padding: 8px 0 !important;
+  gap: 10px !important;
+}
+
+.rescue-mode .rescue-btn {
+  padding: 18px 14px !important;
+  border-radius: 10px !important;
+}
+
+.rescue-mode .rescue-btn-icon {
+  font-size: 28px !important;
+}
+
+.rescue-mode .rescue-btn-label {
+  font-size: 15px !important;
+}
+
+/* 救援模式状态条 */
+.rescue-mode .rescue-status-bar {
+  margin: 0 !important;
+  padding: 10px 8px !important;
+}
+
+/* 救援模式警告框 */
+.rescue-mode .alert-box {
+  margin: 4px 0 !important;
+  padding: 14px 16px !important;
+  border-radius: 10px !important;
+}
+
+.rescue-mode .alert-icon {
+  font-size: 22px !important;
+}
+
+.rescue-mode .alert-title {
+  font-size: 15px !important;
+}
+
+.rescue-mode .alert-body {
+  font-size: 13px !important;
+  line-height: 1.6 !important;
+}
+
+/* 救援模式守护安芯卡展品隐藏 */
+.rescue-mode .product-showcase {
+  display: none !important;
+}

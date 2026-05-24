@@ -29,6 +29,10 @@
   const btnCallPolice   = document.getElementById("btnCallPolice");
   const dementiaBadge   = document.getElementById("dementiaBadge");
   const patientBlood    = document.getElementById("patientBlood");
+  const patientAddr     = document.getElementById("patientAddr");
+  const patientAddrRow  = document.getElementById("patientAddrRow");
+  const patientTags     = document.getElementById("patientTags");
+  const patientMetaRow  = document.getElementById("patientMetaRow");
   const demoCritical    = document.getElementById("demoCritical");
   const demoWarning     = document.getElementById("demoWarning");
   const demoReset       = document.getElementById("demoReset");
@@ -160,7 +164,8 @@
     var bloodType = (document.getElementById("bloodType").value || "").trim();
     var age      = (document.getElementById("patientAge").value || "").trim();
     var contact1 = (document.getElementById("contact1").value || "").trim();
-    var contact2 = (document.getElementById("contact2").value || "").trim();
+    var contact2    = (document.getElementById("contact2").value || "").trim();
+    var homeAddress = (document.getElementById("homeAddress").value || "").trim();
 
     var diseases = [];
     document.querySelectorAll("input[name=disease]:checked").forEach(function (cb) {
@@ -172,7 +177,7 @@
       medications.push(cb.value);
     });
 
-    return { name: name, bloodType: bloodType, age: age, contact1: contact1, contact2: contact2, diseases: diseases, medications: medications };
+    return { name: name, bloodType: bloodType, age: age, contact1: contact1, contact2: contact2, homeAddress: homeAddress, diseases: diseases, medications: medications };
   }
 
   // ── 脱敏处理 ──────────────────────────────────────────────
@@ -191,6 +196,11 @@
     diabetes: "糖尿病",
     "severe-chd": "严重冠心病",
     alzheimer: "阿尔茨海默病"
+  };
+
+  var MED_MAP = {
+    anticoagulant: "抗凝药",
+    insulin: "注射胰岛素"
   };
 
   // ══════════════════════════════════════════════════════════
@@ -231,6 +241,8 @@
       patientBlood.classList.add("show");
     } else {
       patientBlood.classList.remove("show");
+    patientAddrRow.style.display = "none";
+    patientTags.innerHTML = "";
     }
 
     // 隐藏旧警告
@@ -461,6 +473,8 @@
     patientMeta.textContent      = "待扫码加载";
     dementiaBadge.classList.remove("show");
     patientBlood.classList.remove("show");
+    patientAddrRow.style.display = "none";
+    patientTags.innerHTML = "";
   });
 
   // ── 辅助 ──────────────────────────────────────────────────
@@ -520,6 +534,7 @@
     // 回填表单
     if (data.name)     document.getElementById("patientName").value = data.name;
     if (data.bloodType) document.getElementById("bloodType").value = data.bloodType;
+    if (data.homeAddress) document.getElementById("homeAddress").value = data.homeAddress;
     if (data.age)      document.getElementById("patientAge").value  = data.age;
     if (data.contact1) document.getElementById("contact1").value    = data.contact1;
     if (data.contact2) document.getElementById("contact2").value    = data.contact2;
