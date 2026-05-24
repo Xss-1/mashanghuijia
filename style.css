@@ -1353,3 +1353,232 @@ body.rescue-mode {
     padding-bottom: max(24px, env(safe-area-inset-bottom)) !important;
   }
 }
+
+/* ══════════════════════════════════════════
+   守护安芯卡 — 产品实物模拟
+   ══════════════════════════════════════════ */
+
+.product-showcase {
+  background: linear-gradient(135deg, #F8FAFD 0%, #EBF3FE 100%);
+  border: 1.5px solid #D0E0F9;
+  border-radius: var(--radius);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.product-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--blue-dark);
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.product-card-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.product-card-visual {
+  width: 80px;
+  height: 52px;
+  background: linear-gradient(135deg, #FFFFFF, #F0F4FA);
+  border: 2px solid var(--blue-light);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px var(--blue-glow);
+  position: relative;
+}
+
+.product-card-visual::before {
+  content: "";
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  width: 14px;
+  height: 14px;
+  background: var(--blue);
+  border-radius: 2px;
+  opacity: 0.5;
+}
+
+.card-chip {
+  font-size: 24px;
+}
+
+.card-label {
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--blue);
+  margin-top: -2px;
+}
+
+.product-stickers {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.sticker-row {
+  display: flex;
+  gap: 2px;
+}
+
+.sticker-icon {
+  font-size: 18px;
+}
+
+.sticker-count {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.product-specs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+}
+
+.spec-badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 10px;
+  background: #FFFFFF;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--text-secondary);
+}
+
+/* ══════════════════════════════════════════
+   寻人闭环状态条
+   ══════════════════════════════════════════ */
+
+.rescue-status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 10px;
+  gap: 0;
+  margin: 0 10px;
+  background: #F8FAFD;
+  border-radius: 10px;
+}
+
+.status-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-width: 52px;
+  transition: all 0.4s ease;
+}
+
+.status-step-icon {
+  font-size: 18px;
+  transition: all 0.4s ease;
+}
+
+.status-step-label {
+  font-size: 9px;
+  font-weight: 700;
+  color: #94A3B8;
+  transition: color 0.4s ease;
+}
+
+/* 已完成步骤 */
+.status-step.done .status-step-icon {
+  animation: step-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.status-step.done .status-step-label {
+  color: var(--blue-dark);
+}
+
+/* 当前进行中步骤 */
+.status-step.active .status-step-icon {
+  animation: step-pulse 0.8s ease-in-out infinite;
+}
+
+.status-step.active .status-step-label {
+  color: var(--blue);
+  font-weight: 900;
+}
+
+@keyframes step-pop {
+  0% { transform: scale(0.3); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes step-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+/* 连接线 */
+.status-connector {
+  width: 20px;
+  height: 3px;
+  background: #E2E8F0;
+  border-radius: 2px;
+  transition: background 0.6s ease;
+  flex-shrink: 0;
+}
+
+.status-connector.done {
+  background: var(--blue);
+}
+
+/* ── 救援模式下的状态条适配 ── */
+.rescue-mode .rescue-status-bar {
+  margin: 4px 0;
+  padding: 10px 8px;
+}
+
+.rescue-mode .status-step-icon {
+  font-size: 20px;
+}
+
+.rescue-mode .status-step-label {
+  font-size: 10px;
+}
+
+/* ══════════════════════════════════════════
+   0.5s 极速加载计时器
+   ══════════════════════════════════════════ */
+
+.scan-timer {
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--blue);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 1px;
+  background: linear-gradient(135deg, var(--blue-dark), var(--blue));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.scan-timer-fast {
+  color: #10B981;
+  background: linear-gradient(135deg, #059669, #10B981);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: timer-pop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes timer-pop {
+  0% { transform: scale(0.5); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}

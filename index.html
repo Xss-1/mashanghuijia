@@ -110,6 +110,38 @@
           </div>
         </div>
         <p class="qr-hint" id="qrHint">填写表单后点击上方按钮生成智芯码</p>
+      <!-- 守护安芯卡产品实物模拟 -->
+      <div class="product-showcase">
+        <h3 class="product-title">🛡 守护安芯卡 · 民生普惠套装</h3>
+        <div class="product-card-main">
+          <div class="product-card-visual">
+            <div class="card-chip">💳</div>
+            <span class="card-label">智芯卡</span>
+          </div>
+          <div class="product-stickers">
+            <div class="sticker-row">
+              <span class="sticker-icon">👕</span>
+              <span class="sticker-icon">👕</span>
+              <span class="sticker-icon">👕</span>
+              <span class="sticker-icon">👕</span>
+              <span class="sticker-icon">👕</span>
+            </div>
+            <span class="sticker-count">×5 衣服贴</span>
+          </div>
+          <div class="product-stickers">
+            <div class="sticker-row">
+              <span class="sticker-icon">🎒</span>
+              <span class="sticker-icon">🎒</span>
+            </div>
+            <span class="sticker-count">×2 包包贴</span>
+          </div>
+        </div>
+        <div class="product-specs">
+          <span class="spec-badge">🛡 防水耐磨 PP 材质</span>
+          <span class="spec-badge">📏 3×5cm 便携尺寸</span>
+          <span class="spec-badge">🔒 端到端加密</span>
+        </div>
+      </div>
       </div>
     </section>
 
@@ -134,7 +166,24 @@
             <span class="scan-text">正在解析智芯码...</span>
           </div>
 
-          <div class="rescue-actions">
+          
+          <!-- 寻人闭环状态条 -->
+          <div class="rescue-status-bar" id="rescueStatusBar">
+            <div class="status-step" id="stepLost">
+              <span class="status-step-icon">🔴</span>
+              <span class="status-step-label">走失触发</span>
+            </div>
+            <div class="status-connector" id="conn1"></div>
+            <div class="status-step" id="stepScanned">
+              <span class="status-step-icon">⭕</span>
+              <span class="status-step-label">路人扫码</span>
+            </div>
+            <div class="status-connector" id="conn2"></div>
+            <div class="status-step" id="stepContacted">
+              <span class="status-step-icon">⭕</span>
+              <span class="status-step-label">家属通知</span>
+            </div>
+          </div><div class="rescue-actions">
             <button class="rescue-btn rescue-btn-primary" id="btnCallFamily">
               <span class="rescue-btn-icon">📞</span>
               <span class="rescue-btn-label">联系家属</span>

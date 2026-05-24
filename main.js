@@ -31,6 +31,16 @@
   const demoWarning     = document.getElementById("demoWarning");
   const demoReset       = document.getElementById("demoReset");
 
+  const rescueStatusBar = document.getElementById("rescueStatusBar");
+  const stepLost        = document.getElementById("stepLost");
+  const stepScanned     = document.getElementById("stepScanned");
+  const stepContacted   = document.getElementById("stepContacted");
+  const conn1           = document.getElementById("conn1");
+  const conn2           = document.getElementById("conn2");
+
+  var scanTimerInterval = null;
+  var scanStartTime     = 0;
+
   // ── 常量 ──────────────────────────────────────────────────
 
   // 可手动修改此 URL 为你的公网部署地址（如 GitHub Pages）
@@ -237,6 +247,11 @@
     }
 
     // 闪烁效果
+    resetStatusBar();
+    advanceStatusBar("scanned");
+    setTimeout(function () { advanceStatusBar("contacted"); }, 400);
+    setTimeout(function () { advanceStatusBar("complete"); }, 1000);
+
     phoneScreen.style.transition = "none";
     phoneScreen.style.boxShadow  = "inset 0 0 0 3px #2F80ED";
     setTimeout(function () {
@@ -294,8 +309,65 @@
     simulateScanFromStorage(raw);
   });
 
+  function resetStatusBar() {
+    [stepLost, stepScanned, stepContacted].forEach(function (s) {
+      s.classList.remove("done", "active");
+    });
+    [conn1, conn2].forEach(function (c) { c.classList.remove("done"); });
+  }
+
+  function advanceStatusBar(step) {
+    stepLost.classList.add("done");
+    if (step === "scanned") {
+      stepScanned.classList.add("active");
+      conn1.classList.add("done");
+    } else if (step === "contacted") {
+      stepScanned.classList.remove("active");
+      stepScanned.classList.add("done");
+      conn1.classList.add("done");
+      stepContacted.classList.add("active");
+      conn2.classList.add("done");
+    } else if (step === "complete") {
+      stepScanned.classList.remove("active");
+      stepScanned.classList.add("done");
+      stepContacted.classList.remove("active");
+      stepContacted.classList.add("done");
+      conn2.classList.add("done");
+    }
+  }
+
+  function startScanTimer() {
+    scanStartTime = Date.now();
+    var timerEl = scanOverlay.querySelector(".scan-timer");
+    if (!timerEl) {
+      timerEl = document.createElement("span");
+      timerEl.className = "scan-timer";
+      scanOverlay.appendChild(timerEl);
+      var textEl = scanOverlay.querySelector(".scan-text");
+      if (textEl) scanOverlay.insertBefore(timerEl, textEl);
+    }
+    timerEl.textContent = "0.00s";
+    timerEl.className = "scan-timer";
+    scanTimerInterval = setInterval(function () {
+      var elapsed = (Date.now() - scanStartTime) / 1000;
+      timerEl.textContent = elapsed.toFixed(2) + "s";
+    }, 30);
+  }
+
+  function stopScanTimer() {
+    if (scanTimerInterval) {
+      clearInterval(scanTimerInterval);
+      scanTimerInterval = null;
+    }
+    var timerEl = scanOverlay.querySelector(".scan-timer");
+    if (timerEl) {
+      var elapsed = (Date.now() - scanStartTime) / 1000;
+      timerEl.textContent = elapsed.toFixed(2) + "s \u26a1";
+      timerEl.className = "scan-timer scan-timer-fast";
+    }
+  }
+
   function simulateScanFromStorage(rawData) {
-    // 如果有 _currentQRUrl，优先从中解析
     var data = null;
     if (_currentQRUrl) {
       data = parseRescueURL(_currentQRUrl);
@@ -305,20 +377,24 @@
     }
     if (!data) return;
 
-    // 切换到救援视图
-    switchView("rescue"); updateURLIndicator();
+    switchView("rescue");
+    resetStatusBar();
 
-    // 显示加载蒙层
     scanOverlay.style.display = "flex";
     alertCritical.style.display = "none";
     alertCritical.classList.remove("alert-shaking");
     alertWarning.style.display  = "none";
 
-    // 1.2 秒模拟扫码延迟
+    startScanTimer();
+    advanceStatusBar("scanned");
+
     setTimeout(function () {
+      stopScanTimer();
       scanOverlay.style.display = "none";
       renderRescueFromData(data);
-    }, 1200);
+      setTimeout(function () { advanceStatusBar("contacted"); }, 400);
+      setTimeout(function () { advanceStatusBar("complete"); }, 1000);
+    }, 500);
   }
 
   // ── 救援按钮交互 ──────────────────────────────────────────
