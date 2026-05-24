@@ -27,6 +27,8 @@
 
   const btnCallFamily   = document.getElementById("btnCallFamily");
   const btnCallPolice   = document.getElementById("btnCallPolice");
+  const dementiaBadge   = document.getElementById("dementiaBadge");
+  const patientBlood    = document.getElementById("patientBlood");
   const demoCritical    = document.getElementById("demoCritical");
   const demoWarning     = document.getElementById("demoWarning");
   const demoReset       = document.getElementById("demoReset");
@@ -165,6 +167,7 @@
 
   function getFormData() {
     var name     = (document.getElementById("patientName").value || "").trim();
+    var bloodType = (document.getElementById("bloodType").value || "").trim();
     var age      = (document.getElementById("patientAge").value || "").trim();
     var contact1 = (document.getElementById("contact1").value || "").trim();
     var contact2 = (document.getElementById("contact2").value || "").trim();
@@ -179,7 +182,7 @@
       medications.push(cb.value);
     });
 
-    return { name: name, age: age, contact1: contact1, contact2: contact2, diseases: diseases, medications: medications };
+    return { name: name, bloodType: bloodType, age: age, contact1: contact1, contact2: contact2, diseases: diseases, medications: medications };
   }
 
   // ── 脱敏处理 ──────────────────────────────────────────────
@@ -196,7 +199,8 @@
   var DISEASE_MAP = {
     hypertension: "高血压",
     diabetes: "糖尿病",
-    "severe-chd": "严重冠心病"
+    "severe-chd": "严重冠心病",
+    alzheimer: "阿尔茨海默病"
   };
 
   // ══════════════════════════════════════════════════════════
@@ -221,6 +225,23 @@
     if (diseaseLabels.length > 0) metaParts.push(diseaseLabels.join("、"));
 
     patientMeta.textContent = metaParts.join(" · ") || "待扫码加载";
+
+    var hasAlzheimer = (data.diseases || []).indexOf("alzheimer") !== -1;
+    if (hasAlzheimer) {
+      dementiaBadge.classList.add("show");
+    } else {
+      dementiaBadge.classList.remove("show");
+    }
+
+    if (data.bloodType && data.bloodType !== "unknown" && data.bloodType !== "") {
+      patientBlood.textContent = "血型：" + data.bloodType + " 型";
+      patientBlood.classList.add("show");
+    } else if (data.bloodType === "unknown") {
+      patientBlood.textContent = "血型：未知";
+      patientBlood.classList.add("show");
+    } else {
+      patientBlood.classList.remove("show");
+    }
 
     // 隐藏旧警告
     alertCritical.style.display = "none";
@@ -448,6 +469,8 @@
     alertWarning.style.display   = "none";
     patientDisplay.textContent   = "--";
     patientMeta.textContent      = "待扫码加载";
+    dementiaBadge.classList.remove("show");
+    patientBlood.classList.remove("show");
   });
 
   // ── 辅助 ──────────────────────────────────────────────────
@@ -506,6 +529,7 @@
   function restoreFormAndQR(data) {
     // 回填表单
     if (data.name)     document.getElementById("patientName").value = data.name;
+    if (data.bloodType) document.getElementById("bloodType").value = data.bloodType;
     if (data.age)      document.getElementById("patientAge").value  = data.age;
     if (data.contact1) document.getElementById("contact1").value    = data.contact1;
     if (data.contact2) document.getElementById("contact2").value    = data.contact2;

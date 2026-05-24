@@ -52,6 +52,17 @@
         <div class="form-group">
           <label class="form-label" for="patientAge">患者年龄</label>
           <input type="number" id="patientAge" class="form-input" placeholder="请输入年龄" min="0" max="150">
+        <div class="form-group">
+          <label class="form-label" for="bloodType">血型</label>
+          <select id="bloodType" class="form-input">
+            <option value="">请选择血型</option>
+            <option value="A">A 型</option>
+            <option value="B">B 型</option>
+            <option value="AB">AB 型</option>
+            <option value="O">O 型</option>
+            <option value="unknown">未知</option>
+          </select>
+        </div>
         </div>
 
         <div class="form-group">
@@ -74,6 +85,10 @@
             <label class="tag-chip">
               <input type="checkbox" name="disease" value="diabetes">
               <span class="tag-text">糖尿病</span>
+            </label>
+            <label class="tag-chip tag-chip-critical">
+              <input type="checkbox" name="disease" value="alzheimer" checked>
+              <span class="tag-text tag-text-important">🧠 阿尔茨海默病（痴呆）</span>
             </label>
             <label class="tag-chip">
               <input type="checkbox" name="disease" value="severe-chd">
@@ -194,11 +209,14 @@
             </button>
           </div>
 
+          
           <div class="patient-card" id="patientCard">
+            <div class="patient-dementia-badge" id="dementiaBadge">🧠 阿尔茨海默病</div>
             <div class="patient-avatar">👤</div>
             <div class="patient-info">
               <span class="patient-name" id="patientDisplay">--</span>
               <span class="patient-meta" id="patientMeta">待扫码加载</span>
+              <span class="patient-blood" id="patientBlood"></span>
             </div>
           </div>
 

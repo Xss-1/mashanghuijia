@@ -467,3 +467,64 @@ body.rescue-mode{background:var(--bg)!important;min-height:100vh;min-height:100d
 
 /* URL 指示器 */
 .url-indicator{color:var(--text-tertiary);font-size:12px;font-weight:600;margin-right:12px}
+
+/* ── 阿尔茨海默病特殊标签 ── */
+.tag-chip-critical .tag-text-important {
+  border-color: #E03A3A;
+  color: #C53030;
+  background: #FFF5F5;
+  font-weight: 800;
+}
+
+.tag-chip-critical input:checked + .tag-text-important {
+  background: #FFF0F0;
+  border-color: #E03A3A;
+  color: #C53030;
+  box-shadow: 0 0 0 2px rgba(224,58,58,0.12);
+}
+
+/* ── 救援端痴呆标识 ── */
+.patient-dementia-badge {
+  font-size: 12px;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 6px;
+  background: #FFF0F0;
+  color: #C53030;
+  border: 1px solid #FCD5D5;
+  display: none;
+  letter-spacing: 0.5px;
+}
+
+.patient-dementia-badge.show {
+  display: inline-block;
+  animation: badge-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes badge-pop {
+  0% { transform: scale(0); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ── 救援端血型显示 ── */
+.patient-blood {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  margin-top: 2px;
+  display: none;
+}
+
+.patient-blood.show {
+  display: block;
+}
+
+/* ── 救援模式适配 ── */
+.rescue-mode .patient-dementia-badge {
+  font-size: 14px;
+  padding: 6px 14px;
+}
+
+.rescue-mode .patient-blood {
+  font-size: 15px;
+}
