@@ -1,6 +1,29 @@
 /* ============================================================
-   ���ϻؼ� �� Premium Light (DJI �� Apple)
+   码上回家 — Premium Light (DJI & Apple)
    ============================================================ */
+
+/* Mobile performance optimization */
+html{
+  -webkit-text-size-adjust:100%;
+  -webkit-tap-highlight-color:transparent;
+}
+body{
+  -webkit-overflow-scrolling:touch;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* Disable all animations on mobile completely */
+@media(max-width:768px){
+  html,body{
+    overflow-x:hidden;
+  }
+  *{
+    -webkit-transform:translateZ(0);
+    -webkit-backface-visibility:hidden;
+    -webkit-perspective:1000;
+  }
+}
 
 :root {
   --blue: #2F80ED;
@@ -64,7 +87,7 @@ body::before{
 }
 
 @media(max-width:768px){
-  body::before{display:none}
+  body::before{display:none!important;content:none!important}
 }
 
 /* Header */
@@ -482,17 +505,16 @@ body.rescue-mode{background:var(--bg)}
     animation:none!important;
     animation-duration:0s!important;
     animation-delay:0s!important;
-    transition:none!important;
     transition-duration:0s!important;
-    transform:none!important;
   }
   .qr-container::after{display:none!important}
   .dementia-hero.show,.dementia-hero.show .dementia-hero-icon{animation:none!important}
-  .scan-spinner{animation:none!important}
+  .scan-spinner{animation:none!important;transform:none!important}
   .alert-shaking{animation:none!important}
   .step-pulse{animation:none!important}
+  .card-slide-up{animation:none!important}
+  .btn-glow{animation:none!important}
 }
 
 @media(prefers-reduced-motion){*,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important}}
-.qr-container[style*="pointer"]:active{transform:scale(0.97)}
 
