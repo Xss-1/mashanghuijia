@@ -118,7 +118,21 @@
       var o=document.createElement("option");o.value=d;o.textContent=d;
       addrDistrict.appendChild(o);
     });
+    updateHomeAddrFull();
   });
+  addrDistrict.addEventListener("change",function(){
+    updateHomeAddrFull();
+  });
+  addrDetail.addEventListener("input",function(){
+    updateHomeAddrFull();
+  });
+
+  function updateHomeAddrFull(){
+    var fullAddr = getFullAddress();
+    if(fullAddr){
+      homeAddrFull.value = fullAddr;
+    }
+  }
 
   function getFullAddress(){
     var p=[];
@@ -469,12 +483,22 @@
     else if(data.bloodType==="unknown"){patientBlood.textContent="血型未知";patientBlood.classList.add("show");}
     else patientBlood.classList.remove("show");
 
-    // Address
-    var addrToShow=data.homeAddrFull||data.homeAddress;
-    if(addrToShow){patientAddr.textContent=addrToShow;patientAddrRow.style.display="flex";
-      if(data.homeAddrFull){patientNavLink.href="https://uri.amap.com/search?keyword="+encodeURIComponent(data.homeAddrFull);patientNavRow.style.display="flex";}
-      else patientNavRow.style.display="none";
-    }else{patientAddrRow.style.display="none";patientNavRow.style.display="none";}
+    // Address - show province/city/district + detail
+    var addrParts = [];
+    if(data.homeAddress) addrParts.push(data.homeAddress);
+    if(data.homeAddrFull && data.homeAddress && data.homeAddress.indexOf(data.homeAddrFull) === -1) {
+      // homeAddress already includes everything from getFullAddress()
+    }
+    var addrToShow = data.homeAddress || data.homeAddrFull || "";
+    if(addrToShow){
+      patientAddr.textContent = addrToShow;
+      patientAddrRow.style.display = "flex";
+      patientNavLink.href="https://uri.amap.com/search?keyword="+encodeURIComponent(addrToShow);
+      patientNavRow.style.display="flex";
+    }else{
+      patientAddrRow.style.display="none";
+      patientNavRow.style.display="none";
+    }
 
     // Tags
     var tg="";
