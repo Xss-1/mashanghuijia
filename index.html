@@ -1,0 +1,277 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>码上回家 — 智慧医疗普惠 Demo</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+  <!-- ========== 页面头部 ========== -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon">⚕</span>
+        <span class="logo-text">码上回家</span>
+      </div>
+
+      <!-- 视图切换导航 -->
+      <nav class="view-nav" id="viewNav">
+        <button class="view-nav-btn active" data-view="all">📋 全景</button>
+        <button class="view-nav-btn" data-view="family">🏠 家属赋码</button>
+        <button class="view-nav-btn" data-view="rescue">📱 救援模拟</button>
+        <button class="view-nav-btn" data-view="care">🏥 社区看护</button>
+      </nav>
+
+      <div class="header-badge">智慧医疗 · 红旅赛道</div>
+      <span class="url-indicator" id="urlIndicator" style="color:rgba(255,255,255,0.75);font-size:12px;font-weight:600;margin-right:16px;">🔗 检测中...</span><div class="header-status">
+        <span class="status-dot"></span>
+        <span class="status-text">系统就绪</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========== 三栏主体 ========== -->
+  <main class="dashboard">
+
+    <!-- ===== 左侧栏：家属端 ===== -->
+    <section class="panel panel-left" id="panelFamily">
+      <div class="panel-header">
+        <h2 class="panel-title">🏠 家属端 · 患者信息登记</h2>
+        <span class="panel-subtitle">填写后生成随身智芯码</span>
+      </div>
+
+      <form class="patient-form" id="patientForm">
+        <div class="form-group">
+          <label class="form-label" for="patientName">患者姓名</label>
+          <input type="text" id="patientName" class="form-input" placeholder="请输入患者真实姓名" autocomplete="name">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="patientAge">患者年龄</label>
+          <input type="number" id="patientAge" class="form-input" placeholder="请输入年龄" min="0" max="150">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="contact1">紧急联系电话 ①</label>
+          <input type="tel" id="contact1" class="form-input" placeholder="如：138****0000" autocomplete="tel">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="contact2">紧急联系电话 ② <span class="label-optional">（选填）</span></label>
+          <input type="tel" id="contact2" class="form-input" placeholder="备用联系电话" autocomplete="tel">
+        </div>
+
+        <fieldset class="form-group form-tags">
+          <legend class="form-label">基础疾病史</legend>
+          <div class="tag-grid">
+            <label class="tag-chip">
+              <input type="checkbox" name="disease" value="hypertension">
+              <span class="tag-text">高血压</span>
+            </label>
+            <label class="tag-chip">
+              <input type="checkbox" name="disease" value="diabetes">
+              <span class="tag-text">糖尿病</span>
+            </label>
+            <label class="tag-chip">
+              <input type="checkbox" name="disease" value="severe-chd">
+              <span class="tag-text">严重冠心病</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset class="form-group form-tags">
+          <legend class="form-label">长期用药史</legend>
+          <div class="tag-grid">
+            <label class="tag-chip">
+              <input type="checkbox" name="medication" value="anticoagulant">
+              <span class="tag-text">长期服用抗凝药</span>
+            </label>
+            <label class="tag-chip">
+              <input type="checkbox" name="medication" value="insulin">
+              <span class="tag-text">长期注射胰岛素</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <button type="button" class="btn-generate" id="btnGenerate">
+          <span class="btn-icon">🔬</span>
+          <span class="btn-text">一键智芯赋码（免服务器）</span>
+        </button>
+      </form>
+
+      <div class="qr-section">
+        <div class="qr-container" id="qrcode">
+          <div class="qr-placeholder" id="qrPlaceholder">
+            <span class="qr-placeholder-icon">📱</span>
+            <span class="qr-placeholder-text">二维码将在此处生成</span>
+          </div>
+        </div>
+        <p class="qr-hint" id="qrHint">填写表单后点击上方按钮生成智芯码</p>
+      </div>
+    </section>
+
+    <!-- ===== 中间栏：救援端 ===== -->
+    <section class="panel panel-center" id="panelRescue">
+      <div class="panel-header">
+        <h2 class="panel-title">📱 救援端 · 路人扫码视图</h2>
+        <span class="panel-subtitle">H5 轻应用 · 无需安装</span>
+      </div>
+
+      <div class="phone-mockup">
+        <div class="phone-notch"></div>
+        <div class="phone-screen" id="phoneScreen">
+          <div class="phone-status-bar">
+            <span class="phone-time">9:41</span>
+            <span class="phone-icons">📶 🔋</span>
+          </div>
+
+          <!-- 扫码加载蒙层 -->
+          <div class="scan-overlay" id="scanOverlay" style="display: none;">
+            <div class="scan-spinner"></div>
+            <span class="scan-text">正在解析智芯码...</span>
+          </div>
+
+          <div class="rescue-actions">
+            <button class="rescue-btn rescue-btn-primary" id="btnCallFamily">
+              <span class="rescue-btn-icon">📞</span>
+              <span class="rescue-btn-label">联系家属</span>
+            </button>
+            <button class="rescue-btn rescue-btn-danger" id="btnCallPolice">
+              <span class="rescue-btn-icon">🚔</span>
+              <span class="rescue-btn-label">呼叫 110</span>
+            </button>
+          </div>
+
+          <div class="patient-card" id="patientCard">
+            <div class="patient-avatar">👤</div>
+            <div class="patient-info">
+              <span class="patient-name" id="patientDisplay">--</span>
+              <span class="patient-meta" id="patientMeta">待扫码加载</span>
+            </div>
+          </div>
+
+          <div class="alert-box alert-critical" id="alertCritical" style="display: none;">
+            <div class="alert-icon">⚠</div>
+            <div class="alert-content">
+              <div class="alert-title">危急医疗禁忌拦截</div>
+              <div class="alert-body" id="alertCriticalBody">
+                <p><strong>抗凝药物期</strong>，严禁搬动患者！</p>
+                <p class="alert-tagline">🚫 请勿擅自给药，立即联系家属确认用药方案。</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="alert-box alert-warning" id="alertWarning" style="display: none;">
+            <div class="alert-icon">💡</div>
+            <div class="alert-content">
+              <div class="alert-title">慢病照护干预指南</div>
+              <div class="alert-body" id="alertWarningBody">
+                <p>患者有<strong>糖尿病史</strong>，若意识清醒可协助饮用含糖饮料预防低血糖昏迷。</p>
+                <p>保持患者平卧，解开衣领保持呼吸通畅，注意保暖。</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="phone-home-bar"></div>
+        </div>
+      </div>
+
+      <div class="demo-controls">
+        <button class="demo-btn" id="demoCritical">模拟：触发危急拦截</button>
+        <button class="demo-btn" id="demoWarning">模拟：触发慢病指南</button>
+        <button class="demo-btn" id="demoReset">模拟：重置扫码状态</button>
+      </div>
+    </section>
+
+    <!-- ===== 右侧栏：看护端 ===== -->
+    <section class="panel panel-right" id="panelCare">
+      <div class="panel-header">
+        <h2 class="panel-title">🏥 看护端 · 社区随访看板</h2>
+        <span class="panel-subtitle">网格化慢病管理视图</span>
+      </div>
+
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>时间</th>
+              <th>事件类型</th>
+              <th>风险状态</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>05-24 08:12</td>
+              <td>外出触发</td>
+              <td><span class="risk-badge risk-low">✅ 低风险</span></td>
+            </tr>
+            <tr>
+              <td>05-23 14:30</td>
+              <td>定位心跳</td>
+              <td><span class="risk-badge risk-info">ℹ 正常</span></td>
+            </tr>
+            <tr>
+              <td>05-22 19:05</td>
+              <td>边界穿越</td>
+              <td><span class="risk-badge risk-medium">⚠ 中风险</span></td>
+            </tr>
+            <tr>
+              <td>05-21 10:48</td>
+              <td>SOS 触发</td>
+              <td><span class="risk-badge risk-high">🔴 高风险</span></td>
+            </tr>
+            <tr>
+              <td>05-20 16:22</td>
+              <td>设备重启</td>
+              <td><span class="risk-badge risk-info">ℹ 正常</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="metrics-section">
+        <h3 class="metrics-title">核心运营指标</h3>
+
+        <div class="metric-item">
+          <div class="metric-header">
+            <span class="metric-label">网格覆盖良率</span>
+            <span class="metric-value">95.5%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill progress-green progress-animated" style="--target: 95.5%;"></div>
+          </div>
+        </div>
+
+        <div class="metric-item">
+          <div class="metric-header">
+            <span class="metric-label">盲区规避率</span>
+            <span class="metric-value">88%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill progress-blue progress-animated" style="--target: 88%;"></div>
+          </div>
+        </div>
+
+        <div class="metric-item">
+          <div class="metric-header">
+            <span class="metric-label">响应延迟</span>
+            <span class="metric-value">0.38s</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill progress-orange progress-animated" style="--target: 38%;"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© 2025 码上回家 · 中国国际大学生创新大赛 · 红旅赛道 ｜ 医疗普惠 · 科技向善</p>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
