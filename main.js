@@ -50,6 +50,10 @@
   var scanStatsRow = document.getElementById("scanStatsRow");
   var rescueScanCount = document.getElementById("rescueScanCount");
   var rescueLastScan = document.getElementById("rescueLastScan");
+  var qrActions = document.getElementById("qrActions");
+  var btnCopyLink = document.getElementById("btnCopyLink");
+  var btnShare = document.getElementById("btnShare");
+  var btnExport = document.getElementById("btnExport");
   var scanTimerInterval = null;
   var scanStartTime = 0;
   var _currentQRUrl = null;
@@ -407,11 +411,82 @@
       qrcodeContainer.style.cursor="pointer";
       qrcodeContainer.title="点击模拟路人扫码";
       qrHint.textContent="✅ 智芯码已生成 · 点击二维码模拟路人扫码";
+      qrActions.style.display="flex";
     } catch(e) {
       qrHint.textContent="⚠️ 生成失败: "+e.message;
       console.error("QR gen error:",e);
     }
   }
+
+  // Copy link
+  btnCopyLink.addEventListener("click",function(){
+    if(!_currentQRUrl){alert("请先生成二维码");return;}
+    if(navigator.clipboard){
+      navigator.clipboard.writeText(_currentQRUrl).then(function(){
+        alert("✅ 链接已复制到剪贴板");
+      }).catch(function(){
+        fallbackCopy(_currentQRUrl);
+      });
+    }else{
+      fallbackCopy(_currentQRUrl);
+    }
+  });
+
+  function fallbackCopy(text){
+    var ta=document.createElement("textarea");
+    ta.value=text;ta.style.position="fixed";ta.style.opacity="0";
+    document.body.appendChild(ta);ta.select();
+    try{document.execCommand("copy");alert("✅ 链接已复制");}
+    catch(e){alert("复制失败，请手动复制:\n"+text);}
+    document.body.removeChild(ta);
+  }
+
+  // Share
+  btnShare.addEventListener("click",function(){
+    if(!_currentQRUrl){alert("请先生成二维码");return;}
+    if(navigator.share){
+      navigator.share({
+        title:"码上回家 - 智芯码",
+        text:"扫描此二维码查看患者急救信息",
+        url:_currentQRUrl
+      }).catch(function(e){console.log("Share cancelled",e);});
+    }else{
+      alert("您的浏览器不支持分享功能，请使用复制链接");
+    }
+  });
+
+  // Export data
+  btnExport.addEventListener("click",function(){
+    var raw=localStorage.getItem("mashanghuijia_patient");
+    if(!raw){alert("暂无数据可导出");return;}
+    var data=JSON.parse(raw);
+    var exportData={
+      exportTime:new Date().toLocaleString(),
+      patient:{
+        name:data.name||"",
+        age:data.age||"",
+        bloodType:data.bloodType||"",
+        contact1:data.contact1||"",
+        contact2:data.contact2||"",
+        homeAddress:data.homeAddress||"",
+        homeAddrFull:data.homeAddrFull||"",
+        diseases:(data.diseases||[]).map(function(d){return DISEASE_MAP[d]||d;}),
+        medications:(data.medications||[]).map(function(m){return MED_MAP[m]||m;})
+      },
+      scanStats:getScanStats()
+    };
+    var jsonStr=JSON.stringify(exportData,null,2);
+    var blob=new Blob([jsonStr],{type:"application/json"});
+    var url=URL.createObjectURL(blob);
+    var a=document.createElement("a");
+    a.href=url;
+    a.download="患者信息_"+(data.name||"未知")+"_"+new Date().toISOString().slice(0,10)+".json";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    alert("✅ 数据已导出为JSON文件");
+  });
 
   btnGenerate.addEventListener("click",function(){
     try {

@@ -214,6 +214,17 @@ body::before{
 .qr-placeholder-icon{font-size:28px;opacity:0.25}
 .qr-placeholder-text{font-size:12px;color:var(--text-tertiary)}
 .qr-hint{font-size:10px;color:var(--text-tertiary)}
+.qr-actions{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;justify-content:center}
+.action-btn{
+  display:flex;align-items:center;gap:6px;
+  padding:10px 16px;font-size:13px;font-weight:600;font-family:var(--font);
+  border:1px solid var(--border);border-radius:var(--radius-xs);
+  background:var(--surface);color:var(--text-secondary);
+  cursor:pointer;transition:all 0.2s var(--ease);
+}
+.action-btn:hover{background:var(--blue-ghost);color:var(--blue);border-color:var(--border-blue)}
+.action-icon{font-size:15px}
+.btn-icon{font-size:20px}
 
 /* Product showcase */
 .product-showcase{background:var(--bg);border-radius:var(--radius-sm);padding:14px;display:flex;flex-direction:column;gap:8px}
