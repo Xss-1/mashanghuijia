@@ -449,6 +449,8 @@ body.rescue-mode{background:var(--bg)}
 
 /* Mobile responsive */
 @media(max-width:768px){
+  html{font-size:14px}
+  body{font-size:14px}
   .header{padding:0 12px;height:auto;min-height:52px}
   .header-inner{flex-wrap:wrap;padding:8px 0;gap:8px}
   .logo{flex-shrink:0}
@@ -456,35 +458,46 @@ body.rescue-mode{background:var(--bg)}
   .header-badge{display:none}
   .header-status{display:none}
   .dashboard{grid-template-columns:1fr;padding:12px;gap:12px}
-  .panel{padding:16px}
-  .panel-title{font-size:15px}
-  .form-label{font-size:14px}
-  .form-input,select.form-input{height:48px;font-size:15px}
-  .tag-text{padding:8px 12px;font-size:13px}
-  .btn-generate{height:52px;font-size:16px}
-  .followup-stats{flex-direction:column;gap:6px}
-  .stat-card{padding:10px 8px}
-  .stat-value{font-size:20px}
-  .address-selects{flex-direction:column;gap:6px}
+  .panel{padding:16px 12px}
+  .panel-title{font-size:16px}
+  .panel-subtitle{font-size:12px}
+  .form-label{font-size:15px}
+  .form-input,select.form-input{height:50px;font-size:16px;padding:0 12px}
+  .tag-text{padding:10px 14px;font-size:14px}
+  .btn-generate{height:54px;font-size:17px}
+  .followup-stats{flex-direction:column;gap:8px}
+  .stat-card{padding:12px 10px}
+  .stat-value{font-size:22px}
+  .address-selects{flex-direction:column;gap:8px}
   .addr-select{width:100%}
-  .qr-actions{flex-direction:column;width:100%}
-  .action-btn{width:100%;justify-content:center}
-  .product-showcase{padding:12px}
+  .qr-actions{flex-direction:column;width:100%;gap:8px}
+  .action-btn{width:100%;justify-content:center;padding:12px 16px;font-size:14px}
+  .product-showcase{padding:14px}
   .product-card-main{flex-direction:column;gap:12px}
   .product-stickers{min-width:auto}
+  .qr-container{min-height:150px}
+  .qr-placeholder{padding:20px}
+  .qr-placeholder-icon{font-size:32px}
+  .qr-placeholder-text{font-size:13px}
+  .qr-hint{font-size:11px}
+  .custom-input-row{flex-direction:column}
+  .btn-add-tag{width:100%;height:50px}
+  .custom-tag{padding:8px 12px;font-size:13px}
 }
 
 @media(max-width:480px){
-  .view-nav-btn{padding:6px 10px;font-size:10px}
-  .logo-text{font-size:15px}
-  .panel-title{font-size:14px}
+  html{font-size:13px}
+  .view-nav-btn{padding:8px 12px;font-size:11px}
+  .logo-text{font-size:16px}
+  .panel-title{font-size:15px}
   .panel-subtitle{font-size:11px}
-  .form-input,select.form-input{height:44px;font-size:14px}
-  .btn-generate{height:48px;font-size:15px}
-  .tag-text{padding:6px 10px;font-size:12px}
-  .qr-container{min-height:120px}
+  .form-input,select.form-input{height:46px;font-size:15px}
+  .btn-generate{height:50px;font-size:16px}
+  .tag-text{padding:8px 12px;font-size:13px}
+  .qr-container{min-height:130px}
   .followup-dashboard{padding:12px}
-  .stat-value{font-size:18px}
+  .stat-value{font-size:20px}
+  .stat-label{font-size:11px}
   /* Rescue mode mobile */
   .rescue-mode .patient-name{font-size:22px}
   .rescue-mode .patient-blood{font-size:14px}
@@ -494,9 +507,9 @@ body.rescue-mode{background:var(--bg)}
   .rescue-mode .dementia-hero.show{padding:14px 12px}
   .rescue-mode .dementia-hero.show .dementia-hero-icon{font-size:30px}
   .rescue-mode .patient-card{padding:16px 12px}
-  .alert-box{padding:8px 10px}
-  .alert-title{font-size:11px}
-  .alert-body{font-size:9px}
+  .alert-box{padding:10px 12px}
+  .alert-title{font-size:12px}
+  .alert-body{font-size:10px}
 }
 
 /* Disable animations on mobile for better performance */
