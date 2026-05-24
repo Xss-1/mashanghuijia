@@ -128,7 +128,7 @@
   function buildRescueURL(data) {
     var json = JSON.stringify(data);
     var encoded = utf8ToBase64(json);
-    return RESCUE_BASE_URL + "?data=" + encoded;
+    return RESCUE_BASE_URL + "?data=" + encodeURIComponent(encoded);
   }
 
   function parseRescueURL(url) {
@@ -136,7 +136,7 @@
       var u = new URL(url);
       var encoded = u.searchParams.get("data");
       if (!encoded) return null;
-      var json = base64ToUtf8(encoded);
+      var json = base64ToUtf8(decodeURIComponent(encoded));
       return JSON.parse(json);
     } catch (e) {
       return null;
@@ -150,7 +150,7 @@
     var encoded = params.get("data");
     if (!encoded) return null;
     try {
-      var json = base64ToUtf8(encoded);
+      var json = base64ToUtf8(decodeURIComponent(encoded));
       return JSON.parse(json);
     } catch (e) {
       return null;
