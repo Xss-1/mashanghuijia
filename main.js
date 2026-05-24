@@ -7,7 +7,6 @@
   // DOM refs
   var panelFamily = document.getElementById("panelFamily");
   var panelRescue = document.getElementById("panelRescue");
-  var panelCare    = document.getElementById("panelCare");
   var qrcodeContainer = document.getElementById("qrcode");
   var qrHint = document.getElementById("qrHint");
   var btnGenerate = document.getElementById("btnGenerate");
@@ -145,13 +144,12 @@
       b.classList.toggle("active",b.dataset.view===v);
     });
     if(v==="all"){
-      panelFamily.style.display="";panelRescue.style.display="";panelCare.style.display="";
+      panelFamily.style.display="";panelRescue.style.display="";
       document.querySelector(".dashboard").style.gridTemplateColumns="";
     }else{
-      panelFamily.style.display="none";panelRescue.style.display="none";panelCare.style.display="none";
-      if(v==="family")panelFamily.style.display="";
+      panelFamily.style.display="none";panelRescue.style.display="none";if(v==="family")panelFamily.style.display="";
       if(v==="rescue")panelRescue.style.display="";
-      if(v==="care")panelCare.style.display="";
+      if(v==="care")
       document.querySelector(".dashboard").style.gridTemplateColumns="1fr";
     }
   };
@@ -358,8 +356,7 @@
     document.querySelector(".header-badge").style.display="none";
     document.querySelector(".header-status").style.display="none";
     document.querySelector(".footer").style.display="none";
-    panelFamily.style.display="none";panelCare.style.display="none";
-    document.querySelector(".demo-controls").style.display="none";
+    panelFamily.style.display="none";document.querySelector(".demo-controls").style.display="none";
     document.querySelector("#panelRescue .panel-header").style.display="none";
     rescueStatusBar.style.display="none";
 

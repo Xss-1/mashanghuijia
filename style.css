@@ -137,7 +137,7 @@ body::after {
 .dashboard{
   flex:1;max-width:1440px;width:100%;margin:0 auto;
   padding:28px 28px 20px;
-  display:grid;grid-template-columns:1fr 1fr 1fr;
+  display:grid;grid-template-columns:1fr 1fr;
   gap:20px;align-items:start;
   position:relative;z-index:1;
 }
@@ -549,7 +549,7 @@ body.rescue-mode::after{opacity:0.5}
 /* ═══════════════════════════════
    响应式
    ═══════════════════════════════ */
-@media(max-width:1100px){.dashboard{grid-template-columns:1fr 1fr}}
+
 @media(max-width:768px){
   .dashboard{grid-template-columns:1fr;padding:16px;gap:14px}
   .header{padding:0 16px}
@@ -708,4 +708,39 @@ body.rescue-mode::after{opacity:0.5}
   background: var(--blue-glass);
   color: var(--blue-light);
   border: 1px solid var(--border-blue);
+}
+
+/* ── 手环二维码说明 ── */
+.qr-explain {
+  margin: 4px 8px;
+  padding: 10px 14px;
+  background: var(--blue-glass);
+  border: 1px solid var(--border-blue);
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: center;
+}
+
+.qr-explain span {
+  font-size: 10px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.qr-explain span:first-child {
+  font-weight: 700;
+  color: var(--blue-light);
+}
+
+/* rescue mode */
+.rescue-mode .qr-explain {
+  margin: 4px 0;
+  padding: 12px 16px;
+  border-radius: 12px;
+}
+
+.rescue-mode .qr-explain span {
+  font-size: 12px;
 }

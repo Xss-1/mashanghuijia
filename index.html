@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -235,6 +236,8 @@
           </div>
 
 
+          <div class="qr-explain" id="qrExplain"><span>此二维码为「码上回家」智芯手环标识，请勿撕毁。</span><span>扫码即可获取患者急救信息，协助联系家属。</span></div>
+
           <div class="patient-card" id="patientCard">
             <div class="patient-info-full">
               <div class="patient-info-row">
@@ -285,86 +288,6 @@
       </div>
     </section>
 
-    <!-- ===== 右侧栏：看护端 ===== -->
-    <section class="panel panel-right" id="panelCare">
-      <div class="panel-header">
-        <h2 class="panel-title">🏥 看护端 · 社区随访看板</h2>
-        <span class="panel-subtitle">网格化慢病管理视图</span>
-      </div>
-
-      <div class="table-wrapper">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>时间</th>
-              <th>事件类型</th>
-              <th>风险状态</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>05-24 08:12</td>
-              <td>外出触发</td>
-              <td><span class="risk-badge risk-low">✅ 低风险</span></td>
-            </tr>
-            <tr>
-              <td>05-23 14:30</td>
-              <td>定位心跳</td>
-              <td><span class="risk-badge risk-info">ℹ 正常</span></td>
-            </tr>
-            <tr>
-              <td>05-22 19:05</td>
-              <td>边界穿越</td>
-              <td><span class="risk-badge risk-medium">⚠ 中风险</span></td>
-            </tr>
-            <tr>
-              <td>05-21 10:48</td>
-              <td>SOS 触发</td>
-              <td><span class="risk-badge risk-high">🔴 高风险</span></td>
-            </tr>
-            <tr>
-              <td>05-20 16:22</td>
-              <td>设备重启</td>
-              <td><span class="risk-badge risk-info">ℹ 正常</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="metrics-section">
-        <h3 class="metrics-title">核心运营指标</h3>
-
-        <div class="metric-item">
-          <div class="metric-header">
-            <span class="metric-label">网格覆盖良率</span>
-            <span class="metric-value">95.5%</span>
-          </div>
-          <div class="progress-bar">
-            <div class="progress-fill progress-green progress-animated" style="--target: 95.5%;"></div>
-          </div>
-        </div>
-
-        <div class="metric-item">
-          <div class="metric-header">
-            <span class="metric-label">盲区规避率</span>
-            <span class="metric-value">88%</span>
-          </div>
-          <div class="progress-bar">
-            <div class="progress-fill progress-blue progress-animated" style="--target: 88%;"></div>
-          </div>
-        </div>
-
-        <div class="metric-item">
-          <div class="metric-header">
-            <span class="metric-label">响应延迟</span>
-            <span class="metric-value">0.38s</span>
-          </div>
-          <div class="progress-bar">
-            <div class="progress-fill progress-orange progress-animated" style="--target: 38%;"></div>
-          </div>
-        </div>
-      </div>
-    </section>
   </main>
 
   <footer class="footer">
