@@ -741,3 +741,116 @@ body.rescue-mode{background:var(--bg)!important;min-height:100vh;min-height:100d
 .rescue-mode .product-showcase {
   display: none !important;
 }
+
+/* ══════════════════════════════════════════
+   救援模式 — 极简急救屏（终极版）
+   ══════════════════════════════════════════ */
+
+body.rescue-mode {
+  background: #F5F5F7 !important;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* Header: 极简，防止 logo 竖排 */
+.header.rescue-mode {
+  height: auto !important;
+  min-height: 44px;
+  padding: 8px 16px !important;
+  box-shadow: none !important;
+  border-bottom: 1px solid var(--border) !important;
+  background: rgba(255,255,255,0.95) !important;
+}
+
+.header.rescue-mode .header-inner {
+  justify-content: center !important;
+  flex-wrap: nowrap !important;
+}
+
+.header.rescue-mode .logo {
+  flex-shrink: 0 !important;
+  white-space: nowrap !important;
+}
+
+.header.rescue-mode .logo-text {
+  font-size: 17px !important;
+  white-space: nowrap !important;
+  display: inline !important;
+}
+
+/* 仪表盘 */
+.dashboard.rescue-mode {
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  max-width: 100% !important;
+  gap: 0 !important;
+}
+
+/* 救援面板 */
+.panel.rescue-mode {
+  max-width: 100% !important;
+  width: 100% !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  border: none !important;
+  padding: 10px 12px 40px !important;
+  gap: 10px !important;
+  background: #F5F5F7 !important;
+}
+
+/* 痴呆 Hero */
+.rescue-mode .dementia-hero {
+  margin: 0 !important;
+  padding: 16px 16px !important;
+  border-radius: 12px !important;
+}
+
+.rescue-mode .dementia-hero-icon { font-size: 36px !important; }
+.rescue-mode .dementia-hero-text { font-size: 21px !important; font-weight: 900 !important; line-height: 1.3 !important; }
+.rescue-mode .dementia-hero-sub { font-size: 13px !important; }
+
+/* 患者卡 */
+.rescue-mode .patient-card {
+  margin: 0 !important;
+  padding: 14px 14px !important;
+  border-radius: 12px !important;
+  background: #FFFFFF !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06) !important;
+}
+
+.rescue-mode .patient-name { font-size: 24px !important; font-weight: 800 !important; }
+.rescue-mode .patient-meta { font-size: 13px !important; }
+.rescue-mode .patient-blood {
+  font-size: 15px !important;
+  font-weight: 800 !important;
+  color: #E03A3A !important;
+  white-space: nowrap !important;
+}
+.rescue-mode .patient-addr { font-size: 14px !important; }
+.rescue-mode .patient-tag { font-size: 12px !important; padding: 3px 10px !important; }
+.rescue-mode .patient-tag.med-tag { font-size: 12px !important; }
+
+/* 按钮 */
+.rescue-mode .rescue-actions { padding: 6px 0 !important; gap: 10px !important; }
+.rescue-mode .rescue-btn { padding: 18px 14px !important; border-radius: 10px !important; }
+.rescue-mode .rescue-btn-icon { font-size: 28px !important; }
+.rescue-mode .rescue-btn-label { font-size: 15px !important; font-weight: 800 !important; }
+
+/* 警告框 */
+.rescue-mode .alert-box { margin: 4px 0 !important; padding: 14px 16px !important; border-radius: 10px !important; }
+.rescue-mode .alert-icon { font-size: 22px !important; }
+.rescue-mode .alert-title { font-size: 15px !important; }
+.rescue-mode .alert-body { font-size: 13px !important; line-height: 1.6 !important; }
+
+/* 安全区域 */
+@supports (padding: max(0px)) {
+  .dashboard.rescue-mode {
+    padding-left: max(0px, env(safe-area-inset-left)) !important;
+    padding-right: max(0px, env(safe-area-inset-right)) !important;
+  }
+  .panel.rescue-mode {
+    padding-bottom: max(40px, env(safe-area-inset-bottom)) !important;
+  }
+}

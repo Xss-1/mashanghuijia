@@ -491,15 +491,12 @@
 
   // ── 纯救援模式：隐藏所有管理元素 ──
   function enterRescueMode() {
-    // 加 CSS 类统一控制
     document.body.classList.add("rescue-mode");
     document.querySelector(".header").classList.add("rescue-mode");
     document.querySelector(".dashboard").classList.add("rescue-mode");
     panelRescue.classList.add("rescue-mode");
-    var phone = document.querySelector(".phone-mockup");
-    if (phone) phone.classList.add("rescue-mode");
 
-    // 隐藏非救援元素
+    // 彻底隐藏所有非救援元素
     viewNav.style.display = "none";
     document.querySelector(".header-badge").style.display = "none";
     document.querySelector(".header-status").style.display = "none";
@@ -508,6 +505,36 @@
     panelFamily.style.display = "none";
     panelCare.style.display = "none";
     document.querySelector(".demo-controls").style.display = "none";
+
+    // 隐藏救援端内部装饰元素
+    document.querySelector("#panelRescue .panel-header").style.display = "none";
+    document.getElementById("rescueStatusBar").style.display = "none";
+
+    // 彻底移除手机壳结构 — 将内容提升到面板层级
+    var phoneScreen = document.getElementById("phoneScreen");
+    var phoneMockup = document.querySelector(".phone-mockup");
+    if (phoneMockup && phoneScreen) {
+      phoneMockup.style.display = "none";
+      phoneMockup.style.width = "0";
+      phoneMockup.style.height = "0";
+      phoneMockup.style.padding = "0";
+      phoneMockup.style.margin = "0";
+      phoneMockup.style.border = "none";
+      phoneMockup.style.boxShadow = "none";
+      phoneMockup.style.background = "transparent";
+      phoneScreen.style.background = "transparent";
+      phoneScreen.style.borderRadius = "0";
+      phoneScreen.style.minHeight = "auto";
+      phoneScreen.style.boxShadow = "none";
+    }
+
+    // 隐藏手机壳装饰
+    var notch = document.querySelector(".phone-notch");
+    var homeBar = document.querySelector(".phone-home-bar");
+    var statusBar = document.querySelector(".phone-status-bar");
+    if (notch) notch.style.display = "none";
+    if (homeBar) homeBar.style.display = "none";
+    if (statusBar) statusBar.style.display = "none";
 
     // 救援端显示
     panelRescue.style.display = "";
