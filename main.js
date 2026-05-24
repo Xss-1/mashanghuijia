@@ -35,7 +35,7 @@
 
   // 可手动修改此 URL 为你的公网部署地址（如 GitHub Pages）
   // 留空则自动检测当前页面地址
-  var CUSTOM_PUBLIC_URL = "";
+  var CUSTOM_PUBLIC_URL = "https://xss-1.github.io/mashanghuijia/";
 
   // 自动检测当前服务器地址
   function detectBaseURL() {
