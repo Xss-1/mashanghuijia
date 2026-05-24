@@ -128,7 +128,7 @@
   function buildRescueURL(data) {
     var json = JSON.stringify(data);
     var encoded = utf8ToBase64(json);
-    return RESCUE_BASE_URL + "?data=" + encodeURIComponent(encoded);
+    return RESCUE_BASE_URL + "?data=" + encodeURIComponent(encoded) + "&v=3";
   }
 
   function parseRescueURL(url) {

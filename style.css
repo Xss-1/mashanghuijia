@@ -335,10 +335,10 @@ select.form-input{
   font-family:var(--font);font-weight:700;cursor:pointer;
   transition:all 0.2s var(--ease);
 }
-.rescue-btn-primary{background:var(--blue);color:#fff}
-.rescue-btn-primary:hover{background:var(--blue-light);box-shadow:0 4px 16px var(--blue-glow)}
-.rescue-btn-danger{background:var(--danger);color:#fff}
-.rescue-btn-danger:hover{background:#FF6B6B;box-shadow:0 4px 16px rgba(255,77,79,0.3)}
+.rescue-btn-primary{background:#fff;color:var(--blue);border:1.5px solid var(--blue)}
+.rescue-btn-primary:hover{background:rgba(47,128,237,0.08);box-shadow:0 4px 16px var(--blue-glow)}
+.rescue-btn-danger{background:#fff;color:var(--danger);border:1.5px solid var(--danger)}
+.rescue-btn-danger:hover{background:rgba(255,77,79,0.08);box-shadow:0 4px 16px rgba(255,77,79,0.2)}
 .rescue-btn-icon{font-size:20px}
 .rescue-btn-label{font-size:11px}
 
@@ -394,8 +394,9 @@ select.form-input{
 .alert-tagline{font-weight:700}
 .alert-critical{background:var(--danger-bg);border:1px solid var(--danger-border)}
 .alert-critical .alert-title,.alert-critical .alert-tagline{color:var(--danger)}
-.alert-warning{background:var(--warning-bg);border:1px solid var(--warning-border)}
-.alert-warning .alert-title{color:var(--warning)}
+.alert-warning{background:rgba(245,166,35,0.12);border:1px solid rgba(245,166,35,0.35)}
+.alert-warning .alert-title{color:#F5A623}
+.alert-warning .alert-body{color:rgba(255,255,255,0.75)}
 
 /* 脉冲 */
 .alert-critical.alert-shaking{animation:alert-pulse 1s ease-in-out infinite}
@@ -523,7 +524,7 @@ body.rescue-mode::after{opacity:0.5}
 .rescue-mode .patient-tag.med-tag{font-size:11px!important}
 
 .rescue-mode .rescue-actions{padding:6px 0!important;gap:10px!important}
-.rescue-mode .rescue-btn{padding:18px 14px!important;border-radius:10px!important}
+.rescue-mode .rescue-btn{padding:18px 14px!important;border-radius:10px!important;font-size:15px!important}
 .rescue-mode .rescue-btn-icon{font-size:26px!important}
 .rescue-mode .rescue-btn-label{font-size:14px!important;font-weight:800!important}
 
