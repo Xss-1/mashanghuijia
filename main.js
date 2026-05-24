@@ -386,19 +386,37 @@
   //  页面初始化
   // ══════════════════════════════════════════════════════════
 
+  // ── 纯救援模式：隐藏所有管理元素 ──
+  function enterRescueMode() {
+    // 加 CSS 类统一控制
+    document.body.classList.add("rescue-mode");
+    document.querySelector(".header").classList.add("rescue-mode");
+    document.querySelector(".dashboard").classList.add("rescue-mode");
+    panelRescue.classList.add("rescue-mode");
+    var phone = document.querySelector(".phone-mockup");
+    if (phone) phone.classList.add("rescue-mode");
+
+    // 隐藏非救援元素
+    viewNav.style.display = "none";
+    document.querySelector(".header-badge").style.display = "none";
+    document.querySelector(".header-status").style.display = "none";
+    document.getElementById("urlIndicator").style.display = "none";
+    document.querySelector(".footer").style.display = "none";
+    panelFamily.style.display = "none";
+    panelCare.style.display = "none";
+    document.querySelector(".demo-controls").style.display = "none";
+
+    // 救援端显示
+    panelRescue.style.display = "";
+  }
+
   (function init() {
-    // ── 优先级 1：URL 参数中有 data → 模拟扫码直接进入救援 ──
+    // ── 优先级 1：URL 参数中有 data → 纯救援模式 ──
     var urlData = getDataFromPageURL();
     if (urlData) {
-      // 保存到 localStorage
       localStorage.setItem("mashanghuijia_patient", JSON.stringify(urlData));
-
-      // 直接切到救援视图并渲染
-      switchView("rescue"); updateURLIndicator();
+      enterRescueMode();
       renderRescueFromData(urlData);
-
-      // 同时恢复左侧栏表单 + 二维码（方便回到全景视图查看）
-      restoreFormAndQR(urlData); updateURLIndicator();
       return;
     }
 

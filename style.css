@@ -1212,3 +1212,79 @@ html {
     padding: 6px 12px;
   }
 }
+
+/* ══════════════════════════════════════════
+   纯救援模式 — 扫码进来的急救信息屏
+   ══════════════════════════════════════════ */
+
+/* 救援模式下的 body 背景更干净 */
+body.rescue-mode {
+  background: #F0F4FA !important;
+  background-image: none !important;
+}
+
+/* 救援模式下的 header 极简化 */
+.header.rescue-mode {
+  height: 44px;
+  padding: 0 16px;
+  justify-content: center;
+}
+
+/* 救援模式下页面容器居中 */
+.dashboard.rescue-mode {
+  display: flex !important;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 16px;
+}
+
+/* 救援模式面板全宽浮动 */
+.panel.rescue-mode {
+  max-width: 440px;
+  width: 100%;
+  border-radius: 20px !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1) !important;
+  border: 1px solid #E2E8F0 !important;
+}
+
+/* 救援模式手机壳更大 */
+.phone-mockup.rescue-mode {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+}
+
+/* 救援模式按钮更大更醒目 */
+.rescue-btn.rescue-mode {
+  padding: 18px 8px !important;
+}
+
+.rescue-btn-label.rescue-mode {
+  font-size: 16px !important;
+}
+
+/* 救援模式 header 只保留 logo */
+.header.rescue-mode .view-nav,
+.header.rescue-mode .header-badge,
+.header.rescue-mode .header-status,
+.header.rescue-mode .url-indicator {
+  display: none !important;
+}
+
+.header.rescue-mode .header-inner {
+  justify-content: center;
+}
+
+.header.rescue-mode .logo-text {
+  font-size: 20px;
+}
+
+.header.rescue-mode {
+  height: 48px;
+  padding: 0 16px;
+}
+
+/* 救援模式 footer 强制隐藏 */
+.footer.rescue-mode {
+  display: none !important;
+}
