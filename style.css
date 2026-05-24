@@ -581,3 +581,131 @@ body.rescue-mode::after{opacity:0.5}
   opacity: 0.4;
   cursor: not-allowed;
 }
+
+/* ── 项目影响力 ── */
+.impact-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+}
+
+.impact-card {
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  transition: border-color 0.3s;
+}
+
+.impact-card:hover {
+  border-color: var(--border-blue);
+}
+
+.impact-number {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  font-family: "SF Mono","JetBrains Mono",monospace;
+}
+
+.impact-unit {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--blue-light);
+  margin-left: 1px;
+}
+
+.impact-label {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  letter-spacing: 0.5px;
+}
+
+/* ── 流程 ── */
+.flow-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.flow-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.flow-steps {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+}
+
+.flow-step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.flow-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--blue-glass);
+  border: 1px solid var(--border-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.flow-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.flow-text strong {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.flow-text span {
+  font-size: 10px;
+  color: var(--text-tertiary);
+  line-height: 1.5;
+}
+
+.flow-arrow {
+  font-size: 18px;
+  color: var(--border-blue);
+  padding-top: 10px;
+  flex-shrink: 0;
+}
+
+/* ── 特点标签 ── */
+.feature-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  justify-content: center;
+}
+
+.feature-tag {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 12px;
+  background: var(--blue-glass);
+  color: var(--blue-light);
+  border: 1px solid var(--border-blue);
+}
