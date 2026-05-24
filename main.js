@@ -181,7 +181,7 @@
     return n[0]+"*"+n[n.length-1];
   }
 
-  var DISEASE_MAP={hypertension:"高血压",diabetes:"糖尿病","severe-chd":"严重冠心病",alzheimer:"阿尔茨海默病"};
+  var DISEASE_MAP={hypertension:"高血压",diabetes:"糖尿病","severe-chd":"严重冠心病",alzheimer:"阿尔茨海默病",stroke:"脑卒中",parkinson:"帕金森病",copd:"慢阻肺",osteoporosis:"骨质疏松"};
   var MED_MAP={anticoagulant:"抗凝药",insulin:"注射胰岛素"};
 
   // Base64 encode/decode
