@@ -38,6 +38,10 @@
   var addrDistrict = document.getElementById("addrDistrict");
   var addrDetail = document.getElementById("addrDetail");
   var homeAddrFull = document.getElementById("homeAddrFull");
+  var customDiseaseInput = document.getElementById("customDiseaseInput");
+  var customDiseases = document.getElementById("customDiseases");
+  var customMedInput = document.getElementById("customMedInput");
+  var customMedications = document.getElementById("customMedications");
   var scanTimerInterval = null;
   var scanStartTime = 0;
   var _currentQRUrl = null;
@@ -149,6 +153,72 @@
     addrDetail.value=s;
   }
 
+  // Custom tags functionality
+  var customDiseaseList = [];
+  var customMedList = [];
+
+  function addCustomTag(type, value) {
+    if (!value || !value.trim()) return;
+    value = value.trim();
+    var list = type === 'disease' ? customDiseaseList : customMedList;
+    var container = type === 'disease' ? customDiseases : customMedications;
+    var input = type === 'disease' ? customDiseaseInput : customMedInput;
+    
+    if (list.indexOf(value) !== -1) return;
+    
+    list.push(value);
+    
+    var tag = document.createElement('span');
+    tag.className = 'custom-tag';
+    tag.innerHTML = '<span>' + value + '</span><span class="custom-tag-remove" data-type="' + type + '" data-value="' + value + '">×</span>';
+    container.appendChild(tag);
+    input.value = '';
+  }
+
+  function removeCustomTag(type, value) {
+    var list = type === 'disease' ? customDiseaseList : customMedList;
+    var container = type === 'disease' ? customDiseases : customMedications;
+    var idx = list.indexOf(value);
+    if (idx !== -1) {
+      list.splice(idx, 1);
+      var tags = container.querySelectorAll('.custom-tag');
+      tags.forEach(function(tag) {
+        var removeBtn = tag.querySelector('.custom-tag-remove');
+        if (removeBtn && removeBtn.dataset.value === value) {
+          tag.remove();
+        }
+      });
+    }
+  }
+
+  document.getElementById('btnAddDisease').addEventListener('click', function() {
+    addCustomTag('disease', customDiseaseInput.value);
+  });
+
+  document.getElementById('btnAddMed').addEventListener('click', function() {
+    addCustomTag('medication', customMedInput.value);
+  });
+
+  customDiseaseInput.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      addCustomTag('disease', customDiseaseInput.value);
+    }
+  });
+
+  customMedInput.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      addCustomTag('medication', customMedInput.value);
+    }
+  });
+
+  document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('custom-tag-remove')) {
+      removeCustomTag(e.target.dataset.type, e.target.dataset.value);
+    }
+  });
+
   // View switching
   window.switchView = function(v){
     viewNav.querySelectorAll(".view-nav-btn").forEach(function(b){
@@ -181,8 +251,10 @@
     var homeAddrFullVal=(document.getElementById("homeAddrFull").value||"").trim();
     var diseases=[];
     document.querySelectorAll("input[name=disease]:checked").forEach(function(cb){diseases.push(cb.value);});
+    customDiseaseList.forEach(function(d){diseases.push(d);});
     var medications=[];
     document.querySelectorAll("input[name=medication]:checked").forEach(function(cb){medications.push(cb.value);});
+    customMedList.forEach(function(m){medications.push(m);});
     return {name:name,bloodType:bloodType,age:age,contact1:contact1,contact2:contact2,homeAddress:homeAddress,homeAddrFull:homeAddrFullVal,diseases:diseases,medications:medications};
   }
 
@@ -421,8 +493,16 @@
     if(data.contact2)document.getElementById("contact2").value=data.contact2;
     if(data.homeAddress)setAddrFromString(data.homeAddress);
     if(data.homeAddrFull)document.getElementById("homeAddrFull").value=data.homeAddrFull;
-    (data.diseases||[]).forEach(function(d){var cb=document.querySelector("input[name=disease][value='"+d+"']");if(cb)cb.checked=true;});
-    (data.medications||[]).forEach(function(m){var cb=document.querySelector("input[name=medication][value='"+m+"']");if(cb)cb.checked=true;});
+    (data.diseases||[]).forEach(function(d){
+      var cb=document.querySelector("input[name=disease][value='"+d+"']");
+      if(cb){cb.checked=true;}
+      else{addCustomTag('disease',d);}
+    });
+    (data.medications||[]).forEach(function(m){
+      var cb=document.querySelector("input[name=medication][value='"+m+"']");
+      if(cb){cb.checked=true;}
+      else{addCustomTag('medication',m);}
+    });
     genQR(data);
   }
 

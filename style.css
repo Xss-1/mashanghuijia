@@ -152,6 +152,33 @@ body::before{
 .tag-chip-critical .tag-text-important{border-color:var(--danger-border);color:var(--danger)}
 .tag-chip-critical input:checked+.tag-text-important{background:var(--danger-bg);border-color:var(--danger)}
 
+/* Custom tags input */
+.custom-input-row{display:flex;gap:6px;margin-top:8px}
+.custom-input-row .form-input{flex:1}
+.btn-add-tag{
+  padding:0 16px;height:44px;
+  font-size:13px;font-weight:700;font-family:var(--font);
+  border:none;border-radius:var(--radius-xs);
+  background:var(--blue-ghost);color:var(--blue);
+  cursor:pointer;transition:all 0.2s var(--ease);
+}
+.btn-add-tag:hover{background:var(--blue);color:#fff}
+.custom-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.custom-tag{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:5px 10px;font-size:12px;font-weight:600;
+  background:var(--blue-ghost);color:var(--blue);
+  border-radius:18px;border:1px solid var(--border-blue);
+}
+.custom-tag-remove{
+  display:flex;align-items:center;justify-content:center;
+  width:16px;height:16px;border-radius:50%;
+  background:rgba(47,128,237,0.2);color:var(--blue);
+  font-size:14px;font-weight:700;cursor:pointer;
+  transition:all 0.2s var(--ease);
+}
+.custom-tag-remove:hover{background:var(--danger);color:#fff}
+
 /* Button */
 .btn-generate{
   display:flex;align-items:center;justify-content:center;gap:6px;
