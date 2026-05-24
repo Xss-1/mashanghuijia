@@ -510,31 +510,24 @@
     document.querySelector("#panelRescue .panel-header").style.display = "none";
     document.getElementById("rescueStatusBar").style.display = "none";
 
-    // 彻底移除手机壳结构 — 将内容提升到面板层级
+    // 关键修复：把 phone-screen 内的内容搬出手机壳，再藏壳
     var phoneScreen = document.getElementById("phoneScreen");
     var phoneMockup = document.querySelector(".phone-mockup");
     if (phoneMockup && phoneScreen) {
+      // 把 phone-screen 里的所有子节点移到 phone-mockup 前面（panel 内）
+      while (phoneScreen.firstChild) {
+        phoneMockup.parentNode.insertBefore(phoneScreen.firstChild, phoneMockup);
+      }
+      // 隐藏手机壳和空壳子元素
       phoneMockup.style.display = "none";
-      phoneMockup.style.width = "0";
-      phoneMockup.style.height = "0";
-      phoneMockup.style.padding = "0";
-      phoneMockup.style.margin = "0";
-      phoneMockup.style.border = "none";
-      phoneMockup.style.boxShadow = "none";
-      phoneMockup.style.background = "transparent";
-      phoneScreen.style.background = "transparent";
-      phoneScreen.style.borderRadius = "0";
-      phoneScreen.style.minHeight = "auto";
-      phoneScreen.style.boxShadow = "none";
+      phoneScreen.style.display = "none";
+      var notch = document.querySelector(".phone-notch");
+      var homeBar = document.querySelector(".phone-home-bar");
+      var statusBar = document.querySelector(".phone-status-bar");
+      if (notch) notch.style.display = "none";
+      if (homeBar) homeBar.style.display = "none";
+      if (statusBar) statusBar.style.display = "none";
     }
-
-    // 隐藏手机壳装饰
-    var notch = document.querySelector(".phone-notch");
-    var homeBar = document.querySelector(".phone-home-bar");
-    var statusBar = document.querySelector(".phone-status-bar");
-    if (notch) notch.style.display = "none";
-    if (homeBar) homeBar.style.display = "none";
-    if (statusBar) statusBar.style.display = "none";
 
     // 救援端显示
     panelRescue.style.display = "";
