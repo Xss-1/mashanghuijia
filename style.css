@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
    码上回家 — 智慧医疗普惠 Demo 样式表
    主色调: 医美蓝 #2F80ED
    设计理念: 现代智慧医疗舱 · 适老化 · 数字化科技感
@@ -1214,77 +1214,142 @@ html {
 }
 
 /* ══════════════════════════════════════════
-   纯救援模式 — 扫码进来的急救信息屏
+   纯救援模式 — 扫码进来的急救信息屏（手机适配）
    ══════════════════════════════════════════ */
 
-/* 救援模式下的 body 背景更干净 */
+/* 救援模式 body：占满视口 */
 body.rescue-mode {
   background: #F0F4FA !important;
   background-image: none !important;
+  min-height: 100vh;
+  min-height: 100dvh;
 }
 
-/* 救援模式下的 header 极简化 */
+/* 救援模式 header：极简 logo 条 */
 .header.rescue-mode {
   height: 44px;
   padding: 0 16px;
-  justify-content: center;
+  box-shadow: none;
+  background: linear-gradient(135deg, var(--blue-dark), var(--blue));
 }
 
-/* 救援模式下页面容器居中 */
+/* 救援模式主容器：全宽无间距 */
 .dashboard.rescue-mode {
   display: flex !important;
-  justify-content: center;
-  align-items: flex-start;
-  padding-top: 16px;
+  flex-direction: column;
+  padding: 0 !important;
+  margin: 0 !important;
+  max-width: 100% !important;
+  gap: 0 !important;
 }
 
-/* 救援模式面板全宽浮动 */
+/* 救援模式面板：全宽无边角 */
 .panel.rescue-mode {
-  max-width: 440px;
-  width: 100%;
-  border-radius: 20px !important;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.1) !important;
-  border: 1px solid #E2E8F0 !important;
+  max-width: 100% !important;
+  width: 100% !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  border: none !important;
+  padding: 16px 12px 24px !important;
+  gap: 12px !important;
 }
 
-/* 救援模式手机壳更大 */
+/* ── 去掉手机外壳（真实手机不需要假壳）── */
 .phone-mockup.rescue-mode {
   width: 100% !important;
   max-width: 100% !important;
   margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
 }
 
-/* 救援模式按钮更大更醒目 */
-.rescue-btn.rescue-mode {
-  padding: 18px 8px !important;
-}
-
-.rescue-btn-label.rescue-mode {
-  font-size: 16px !important;
-}
-
-/* 救援模式 header 只保留 logo */
-.header.rescue-mode .view-nav,
-.header.rescue-mode .header-badge,
-.header.rescue-mode .header-status,
-.header.rescue-mode .url-indicator {
+.phone-mockup.rescue-mode .phone-notch {
   display: none !important;
 }
 
-.header.rescue-mode .header-inner {
-  justify-content: center;
-}
-
-.header.rescue-mode .logo-text {
-  font-size: 20px;
-}
-
-.header.rescue-mode {
-  height: 48px;
-  padding: 0 16px;
-}
-
-/* 救援模式 footer 强制隐藏 */
-.footer.rescue-mode {
+.phone-mockup.rescue-mode .phone-home-bar {
   display: none !important;
+}
+
+.phone-mockup.rescue-mode .phone-screen {
+  border-radius: 0 !important;
+  min-height: auto !important;
+  background: transparent !important;
+}
+
+.phone-mockup.rescue-mode .phone-status-bar {
+  display: none !important;
+}
+
+/* ── 救援按钮放大，占满宽度 ── */
+.rescue-mode .rescue-actions {
+  padding: 8px 0 !important;
+  gap: 12px !important;
+}
+
+.rescue-mode .rescue-btn {
+  padding: 20px 12px !important;
+  border-radius: 14px !important;
+}
+
+.rescue-mode .rescue-btn-icon {
+  font-size: 32px !important;
+}
+
+.rescue-mode .rescue-btn-label {
+  font-size: 17px !important;
+  font-weight: 800 !important;
+}
+
+/* ── 患者卡片 ── */
+.rescue-mode .patient-card {
+  margin: 4px 0 !important;
+  padding: 18px 16px !important;
+  border-radius: 14px !important;
+}
+
+.rescue-mode .patient-avatar {
+  width: 52px !important;
+  height: 52px !important;
+  font-size: 26px !important;
+}
+
+.rescue-mode .patient-name {
+  font-size: 26px !important;
+}
+
+.rescue-mode .patient-meta {
+  font-size: 15px !important;
+}
+
+/* ── 警报框 ── */
+.rescue-mode .alert-box {
+  margin: 6px 0 !important;
+  padding: 16px !important;
+  border-radius: 14px !important;
+}
+
+.rescue-mode .alert-icon {
+  font-size: 26px !important;
+}
+
+.rescue-mode .alert-title {
+  font-size: 17px !important;
+}
+
+.rescue-mode .alert-body {
+  font-size: 15px !important;
+}
+
+/* ── 安全区域适配（刘海屏）── */
+@supports (padding: max(0px)) {
+  .dashboard.rescue-mode {
+    padding-left: max(0px, env(safe-area-inset-left)) !important;
+    padding-right: max(0px, env(safe-area-inset-right)) !important;
+  }
+  .panel.rescue-mode {
+    padding-bottom: max(24px, env(safe-area-inset-bottom)) !important;
+  }
 }
