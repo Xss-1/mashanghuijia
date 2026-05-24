@@ -73,9 +73,21 @@
         <div class="form-group">
           <label class="form-label" for="contact2">紧急联系电话 ② <span class="label-optional">（选填）</span></label>
           <input type="tel" id="contact2" class="form-input" placeholder="备用联系电话" autocomplete="tel">
+
         <div class="form-group">
-          <label class="form-label" for="homeAddress">家庭地址</label>
-          <input type="text" id="homeAddress" class="form-input" placeholder="省/市/区/街道/门牌号" autocomplete="street-address">
+          <label class="form-label">家庭地址</label>
+          <div class="address-selects">
+            <select id="addrProvince" class="form-input addr-select">
+              <option value="">省/直辖市</option>
+            </select>
+            <select id="addrCity" class="form-input addr-select" disabled>
+              <option value="">市/区</option>
+            </select>
+            <select id="addrDistrict" class="form-input addr-select" disabled>
+              <option value="">区/县</option>
+            </select>
+          </div>
+          <input type="text" id="addrDetail" class="form-input" placeholder="街道/门牌号（选填）" style="margin-top:4px">
         </div>
         </div>
 

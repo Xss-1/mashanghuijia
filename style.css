@@ -565,3 +565,19 @@ body.rescue-mode::after{opacity:0.5}
 
 .qr-container[style*="pointer"]:active{transform:scale(0.97)}
 .url-indicator{color:var(--text-tertiary);font-size:11px;font-weight:500;margin-right:10px}
+
+/* ── 地址联动选择器 ── */
+.address-selects {
+  display: flex;
+  gap: 6px;
+}
+
+.addr-select {
+  flex: 1;
+  min-width: 0;
+}
+
+.addr-select:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
