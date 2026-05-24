@@ -339,11 +339,11 @@ body.rescue-mode{background:var(--bg)}
 .panel.rescue-mode{max-width:100%;width:100%;border-radius:0;box-shadow:none;border:none;padding:12px 14px 48px;gap:14px;background:transparent}
 
 /* Dementia hero - breathing pulse */
-.rescue-mode .dementia-hero{
+.rescue-mode .dementia-hero.show{
   margin:0;padding:18px 14px;border-radius:14px;
   animation:hero-breathe 3s ease-in-out infinite;
 }
-.rescue-mode .dementia-hero-icon{font-size:38px;animation:icon-float 2s ease-in-out infinite}
+.rescue-mode .dementia-hero.show .dementia-hero-icon{font-size:38px;animation:icon-float 2s ease-in-out infinite}
 .rescue-mode .dementia-hero-text{font-size:22px;font-weight:900}
 .rescue-mode .dementia-hero-sub{font-size:14px;font-weight:500;margin-top:2px}
 
@@ -409,7 +409,33 @@ body.rescue-mode{background:var(--bg)}
 .header.rescue-mode .view-nav,.header.rescue-mode .header-badge,.header.rescue-mode .header-status{display:none}
 .footer.rescue-mode{display:none}.rescue-mode .product-showcase{display:none}
 
-@media(max-width:768px){.dashboard{grid-template-columns:1fr;padding:14px;gap:14px}.header{padding:0 14px}.panel{padding:18px}}
+/* Mobile responsive */
+@media(max-width:768px){
+  .header{padding:0 12px;height:auto;min-height:52px}
+  .header-inner{flex-wrap:wrap;padding:8px 0;gap:8px}
+  .logo{flex-shrink:0}
+  .view-nav{order:3;width:100%;justify-content:center}
+  .header-badge{display:none}
+  .header-status{display:none}
+  .dashboard{grid-template-columns:1fr;padding:12px;gap:12px}
+  .panel{padding:16px}
+  .panel-title{font-size:15px}
+  .form-label{font-size:14px}
+  .form-input,select.form-input{height:48px;font-size:15px}
+  .tag-text{padding:8px 12px;font-size:13px}
+  .btn-generate{height:52px;font-size:16px}
+  .followup-stats{flex-direction:column;gap:6px}
+  .stat-card{padding:10px 8px}
+  .stat-value{font-size:20px}
+}
+
+@media(max-width:480px){
+  .view-nav-btn{padding:6px 10px;font-size:10px}
+  .logo-text{font-size:15px}
+  .panel-title{font-size:14px}
+  .panel-subtitle{font-size:11px}
+}
+
 @media(prefers-reduced-motion){*,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important}}
 .qr-container[style*="pointer"]:active{transform:scale(0.97)}
 
