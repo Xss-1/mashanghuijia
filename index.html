@@ -221,6 +221,31 @@
           <span class="spec-badge">🔒 端到端加密</span>
         </div>
       </div>
+
+      <!-- 随访看板 -->
+      <div class="followup-dashboard" id="followupDashboard" style="display:none;">
+        <h3 class="followup-title">📊 居家照护随访看板</h3>
+        <div class="followup-stats">
+          <div class="stat-card">
+            <span class="stat-value" id="scanCount">0</span>
+            <span class="stat-label">累计扫码次数</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-value" id="lastScanTime">--</span>
+            <span class="stat-label">最近扫码时间</span>
+          </div>
+          <div class="stat-card stat-card-risk">
+            <span class="stat-value" id="riskLevel">--</span>
+            <span class="stat-label">风险等级</span>
+          </div>
+        </div>
+        <div class="followup-history">
+          <h4 class="history-title">扫码记录</h4>
+          <div class="history-list" id="scanHistory">
+            <p class="history-empty">暂无扫码记录</p>
+          </div>
+        </div>
+      </div>
       </div>
     </section>
 
@@ -307,6 +332,16 @@
                 <a id="patientNavLink" class="patient-nav-link" href="#" target="_blank" rel="noopener noreferrer">
                   点击打开地图导航（规划路线）
                 </a>
+              </div>
+              <div class="patient-info-row scan-stats-row" id="scanStatsRow" style="display:none">
+                <span class="scan-stat">
+                  <span class="scan-stat-icon">📊</span>
+                  <span>累计扫码: <strong id="rescueScanCount">0</strong> 次</span>
+                </span>
+                <span class="scan-stat">
+                  <span class="scan-stat-icon">🕐</span>
+                  <span>最近: <strong id="rescueLastScan">--</strong></span>
+                </span>
               </div>
               <div class="patient-tags-row" id="patientTags"></div>
             </div>

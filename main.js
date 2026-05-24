@@ -42,6 +42,14 @@
   var customDiseases = document.getElementById("customDiseases");
   var customMedInput = document.getElementById("customMedInput");
   var customMedications = document.getElementById("customMedications");
+  var followupDashboard = document.getElementById("followupDashboard");
+  var scanCountEl = document.getElementById("scanCount");
+  var lastScanTimeEl = document.getElementById("lastScanTime");
+  var riskLevelEl = document.getElementById("riskLevel");
+  var scanHistoryEl = document.getElementById("scanHistory");
+  var scanStatsRow = document.getElementById("scanStatsRow");
+  var rescueScanCount = document.getElementById("rescueScanCount");
+  var rescueLastScan = document.getElementById("rescueLastScan");
   var scanTimerInterval = null;
   var scanStartTime = 0;
   var _currentQRUrl = null;
@@ -219,6 +227,88 @@
     }
   });
 
+  // Scan statistics functions
+  function getScanStats() {
+    var data = localStorage.getItem("mashanghuijia_scan_stats");
+    if (!data) return { count: 0, history: [] };
+    try { return JSON.parse(data); }
+    catch (e) { return { count: 0, history: [] }; }
+  }
+
+  function saveScanStats(stats) {
+    localStorage.setItem("mashanghuijia_scan_stats", JSON.stringify(stats));
+  }
+
+  function recordScan() {
+    var stats = getScanStats();
+    var now = new Date();
+    var timeStr = now.getFullYear() + '/' + 
+                  (now.getMonth() + 1).toString().padStart(2, '0') + '/' + 
+                  now.getDate().toString().padStart(2, '0') + ' ' +
+                  now.getHours().toString().padStart(2, '0') + ':' +
+                  now.getMinutes().toString().padStart(2, '0');
+    
+    stats.count++;
+    stats.history.unshift({ time: timeStr, timestamp: now.getTime() });
+    if (stats.history.length > 20) stats.history.pop();
+    
+    saveScanStats(stats);
+    return stats;
+  }
+
+  function calculateRiskLevel(stats, data) {
+    var risk = 0;
+    var count = stats ? stats.count : 0;
+    
+    if (count >= 5) risk += 2;
+    else if (count >= 3) risk += 1;
+    
+    if (data && data.diseases) {
+      if (data.diseases.indexOf('alzheimer') !== -1) risk += 1;
+      if (data.diseases.indexOf('stroke') !== -1) risk += 1;
+    }
+    
+    if (risk >= 3) return { level: '高危', class: 'danger' };
+    if (risk >= 2) return { level: '中危', class: 'warning' };
+    return { level: '低危', class: '' };
+  }
+
+  function updateFollowupDashboard(stats, data) {
+    if (!followupDashboard) return;
+    
+    followupDashboard.style.display = 'block';
+    scanCountEl.textContent = stats.count;
+    
+    if (stats.history.length > 0) {
+      lastScanTimeEl.textContent = stats.history[0].time.split(' ')[1];
+    } else {
+      lastScanTimeEl.textContent = '--';
+    }
+    
+    var risk = calculateRiskLevel(stats, data);
+    riskLevelEl.textContent = risk.level;
+    riskLevelEl.parentElement.className = 'stat-card stat-card-risk ' + risk.class;
+    
+    if (stats.history.length > 0) {
+      var html = '';
+      stats.history.forEach(function(item, i) {
+        html += '<div class="history-item"><span>第 ' + (i + 1) + ' 次扫码</span><span class="history-time">' + item.time + '</span></div>';
+      });
+      scanHistoryEl.innerHTML = html;
+    }
+  }
+
+  function updateRescueScanStats(stats) {
+    if (!scanStatsRow) return;
+    
+    scanStatsRow.style.display = 'flex';
+    rescueScanCount.textContent = stats.count;
+    
+    if (stats.history.length > 0) {
+      rescueLastScan.textContent = stats.history[0].time;
+    }
+  }
+
   // View switching
   window.switchView = function(v){
     viewNav.querySelectorAll(".view-nav-btn").forEach(function(b){
@@ -315,6 +405,8 @@
       if(!data.homeAddrFull){alert("请填写家庭住址");return;}
       localStorage.setItem("mashanghuijia_patient",JSON.stringify(data));
       genQR(data);
+      var stats = getScanStats();
+      updateFollowupDashboard(stats, data);
     } catch(e) {
       alert("生成失败: "+e.message);
       console.error(e);
@@ -412,6 +504,7 @@
     var raw=localStorage.getItem("mashanghuijia_patient");
     if(!raw)return;
     var data;try{data=JSON.parse(raw);}catch(e){return;}
+    var stats = recordScan();
     switchView("rescue");resetStatus();
     scanOverlay.style.display="flex";
     alertCritical.style.display="none";alertCritical.classList.remove("alert-shaking");
@@ -420,6 +513,7 @@
     setTimeout(function(){
       stopTimer();scanOverlay.style.display="none";
       renderRescue(data);
+      updateRescueScanStats(stats);
       setTimeout(function(){advanceStatus("call");},400);
       setTimeout(function(){advanceStatus("done");},1000);
     },500);
@@ -451,6 +545,7 @@
     dementiaBadge.classList.remove("show");patientBlood.classList.remove("show");
     patientContactRow.style.display="none";
     patientAddrRow.style.display="none";patientNavRow.style.display="none";patientTags.innerHTML="";
+    scanStatsRow.style.display="none";
   });
 
   // Enter rescue mode (no shell)
