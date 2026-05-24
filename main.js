@@ -69,16 +69,6 @@
       el.textContent = "🔗 二维码域名: " + display;
     }
   }
-    // 自动检测当前服务器地址（微信扫码需真实可达 URL）
-  var RESCUE_BASE_URL = (function () {
-    var loc = window.location;
-    if (loc.protocol === "file:") {
-      // 本地文件打开 → 默认使用 localhost:8080（启动服务器后自动替换）
-      return "http://localhost:8080/index.html";
-    }
-    // HTTP/HTTPS 服务器 → 使用当前域名 + 路径
-    return loc.origin + loc.pathname;
-  })();
 
   // ── 当前生成的二维码 URL（用于模拟扫码） ─────────────────
   var _currentQRUrl = null;
